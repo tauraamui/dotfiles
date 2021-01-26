@@ -11,6 +11,7 @@ sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/v
 sudo apt-get update
 sudo apt-get install code
 sudo apt-get install git
+git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 mkdir ~/bin
 curl -sL -o ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.3.0/gvm-linux-amd64
 chmod +x ~/bin/gvm
