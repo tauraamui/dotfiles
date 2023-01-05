@@ -37,16 +37,16 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local lsp_installer = require("nvim-lsp-installer")
-lsp_installer.settings({
-    ui = {
-        icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗"
-        }
-    }
-})
+-- local lsp_installer = require("nvim-lsp-installer")
+-- lsp_installer.settings({
+--     ui = {
+--         icons = {
+--             server_installed = "✓",
+--             server_pending = "➜",
+--             server_uninstalled = "✗"
+--         }
+--     }
+-- })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local on_attach = function(client, bufnr)
@@ -112,7 +112,7 @@ function OrganizeImports(timeoutms)
     end
 end
 
-lsp_installer.setup{}
+-- lsp_installer.setup{}
 local lspconfig = require('lspconfig')
 lspconfig.gopls.setup {
     capabilities = capabilities,
