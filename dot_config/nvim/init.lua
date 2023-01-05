@@ -6,6 +6,7 @@ vim.g.catppuccin_flavour = "macchiato"
 catppuccin.setup()
 vim.cmd [[colorscheme catppuccin]]
 
+require('me.nvimtree')
 require('me.lsp')
 require('me.options')
 require('me.globals')
