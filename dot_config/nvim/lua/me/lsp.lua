@@ -9,9 +9,23 @@ cmp.setup({
      end,
   },
   mapping = {
-    ['<Tab>'] = function(fallback)
+    ['<Up>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end,
+    ['<Down>'] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      else
+        fallback()
+      end
+    end,
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.confirm()
       else
         fallback()
       end
