@@ -141,17 +141,17 @@ lspconfig.gopls.setup {
     },
 }
 
-lspconfig.golangci_lint_ls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = {
-        gopls = {
-            gofumpt = true,
-        },
-    },
-    flags = {
-        debounce_text_changes = 150,
-    },
-}
+--lspconfig.golangci_lint_ls.setup {
+--    capabilities = capabilities,
+--    on_attach = on_attach,
+--    settings = {
+--        gopls = {
+--            gofumpt = true,
+--        },
+--    },
+--    flags = {
+--        debounce_text_changes = 150,
+--    },
+--}
 
 
