@@ -35,11 +35,7 @@ treesitter.setup { ensure_installed = "all", highlight = { enable = true } }
 
 -- keymaps
 vim.keymap.set("n", "<leader>p", "<cmd>Glow<cr>")
-nmap{"<C-f>", "<cmd>Telescope current_buffer_fuzzy_find sorting_strategy=ascending prompt_position=top<CR>"}
-nmap{"<leader>lg", "<cmd>Telescope live_grep<CR>"}
-nmap{"<leader>dl", "<cmd>Telescope diagnostics<cr>"}
+nmap{"<leader>ff", "<cmd>Telescope find_files<cr>"}
+nmap{"<leader>fg", "<cmd>Telescope live_grep<cr>"}
+nmap{"<leader>tt", "<cmd>NvimTreeToggle<cr>"}
 
--- navigation
-nmap{"L", "<cmd>bnext<cr>"}
-nmap{"H", "<cmd>bprevious<cr>"}
-nmap{"F", "<cmd>HopPattern<cr>"}

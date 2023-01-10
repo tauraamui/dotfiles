@@ -6,13 +6,13 @@ require('telescope').setup{
       mappings = {
           i = {
             ["<c-a>"] = function() print(vim.inspect(action_state.get_selected_entry())) end 
-          }        
+          }
       }
   }
 }
+
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('file_browser')
-
 
 local mappings = {}
 mappings.curr_buf = function() 
@@ -20,3 +20,4 @@ mappings.curr_buf = function()
   require('telescope.builtin').current_buffer_fuzzy_find(opt)
 end
 return mappings
+
