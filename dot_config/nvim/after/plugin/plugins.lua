@@ -27,12 +27,16 @@ return require('packer').startup(function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
   })
 
+  -- File tree visualisation
   use {
     'nvim-tree/nvim-tree.lua',
     requires = {
       'nvim-tree/nvim-web-devicons'
     }
   }
+
+  -- Indent guide lines
+  use "lukas-reineke/indent-blankline.nvim"
 
   -- Go coverage
   use({
