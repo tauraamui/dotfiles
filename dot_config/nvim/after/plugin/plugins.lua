@@ -29,6 +29,22 @@ return require('packer').startup(function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
   })
 
+  -- Git line blame visualisation
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+
+  use {
+    'akinsho/toggleterm.nvim',
+    tag = '*',
+    config = function()
+      require('toggleterm').setup()
+    end
+  }
+
   -- File tree visualisation
   use {
     'nvim-tree/nvim-tree.lua',
