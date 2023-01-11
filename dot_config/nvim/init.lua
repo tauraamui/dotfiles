@@ -84,7 +84,13 @@ require("catppuccin").setup {
 	},
 }
 
-vim.cmd.colorscheme "catppuccin"
+vim.opt.background = "dark"
+vim.cmd.colorscheme "oxocarbon"
+-- vim.cmd.colorscheme "catppuccin"
+
+if vim.g.neovide then
+	vim.opt.guifont = { "SauceCodePro Nerd Font Mono", ":h7.5" }
+end
 
 require('me.globals')
 require('me.nvimtree')
