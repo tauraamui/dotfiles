@@ -89,13 +89,13 @@ vim.cmd.colorscheme "oxocarbon"
 -- vim.cmd.colorscheme "catppuccin"
 
 if vim.g.neovide then
-	vim.opt.guifont = { "SauceCodePro Nerd Font Mono", ":h10" }
+	vim.opt.guifont = { "SauceCodePro Nerd Font Mono", ":h9.5" }
 end
 
 require('me.globals')
 require('me.nvimtree')
 require('me.lsp')
 require('me.options')
-require('me.lualine')
+require('me.feline')
 require('me.keymap')
 require('me.telescope')
