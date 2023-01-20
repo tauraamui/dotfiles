@@ -31,19 +31,19 @@ local MODE_COLORS = {
 -- gruvbox theme
 local GRUVBOX = {
   fg = '#baf5e3',
-  bg = '#3c3836',
-  black = '#3c3836',
-  skyblue = '#85e6f2',
-  cyan = '#3bd9eb',
-  green = '#4eed71',
-  oceanblue = '#28cced',
-  blue = '#2d58f7',
-  magenta = '#d3869b',
-  orange = '#e88543',
-  red = '#fb4934',
-  violet = '#c467e6',
-  white = '#d5ebe7',
-  yellow = '#edb334',
+  bg = '#262525',
+  black = '#262525',
+  skyblue = '#5db8f5',
+  cyan = '#5debf5',
+  green = '#5df57e',
+  oceanblue = '#5d80f5',
+  blue = '#5865f7',
+  magenta = '#f55da9',
+  orange = '#f5bb5d',
+  red = '#fb3434',
+  violet = '#d28df7',
+  white = '#f5ebc4',
+  yellow = '#f2e35c',
 }
 
 --

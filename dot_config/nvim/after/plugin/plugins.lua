@@ -178,8 +178,14 @@ return require('packer').startup(function(use)
   --magit
   use 'TimUntersberger/neogit'
 
-  --todo comments
-  use 'folke/todo-comments.nvim'
+  --todo tracking
+  use {
+    'folke/todo-comments.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function()
+      require('todo-comments').setup{}
+    end
+  }
 
   --devicons
   use 'kyazdani42/nvim-web-devicons'

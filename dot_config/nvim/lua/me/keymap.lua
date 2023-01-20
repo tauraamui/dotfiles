@@ -39,5 +39,7 @@ nmap{"<leader>ff", "<cmd>Telescope find_files<cr>"}
 nmap{"<leader>fg", "<cmd>Telescope live_grep<cr>"}
 nmap{"<leader>fd", "<cmd>Telescope diagnostics<cr>"}
 nmap{"<leader>fb", "<cmd>Telescope buffers<cr>"}
+nmap{"<leader>ft", "<cmd>TodoQuickFix<cr>"}
+
 nmap{"<leader>tt", "<cmd>NvimTreeToggle<cr>"}
 
