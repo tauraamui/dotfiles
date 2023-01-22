@@ -56,6 +56,12 @@ return require('packer').startup(function(use)
   -- Indent guide lines
   use "lukas-reineke/indent-blankline.nvim"
 
+  -- Autopair brackets
+  use {
+      "windwp/nvim-autopairs",
+      config = function() require("nvim-autopairs").setup {} end
+  }
+
   -- Go coverage
   use({
     "andythigpen/nvim-coverage",
