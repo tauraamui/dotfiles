@@ -141,6 +141,8 @@ lspconfig.gopls.setup {
     },
 }
 
+lspconfig.rust_analyzer.setup{}
+
 --lspconfig.golangci_lint_ls.setup {
 --    capabilities = capabilities,
 --    on_attach = on_attach,
