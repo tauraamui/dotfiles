@@ -36,6 +36,7 @@ treesitter.setup { ensure_installed = "all", highlight = { enable = true } }
 -- keymaps
 vim.keymap.set("n", "<leader>p", "<cmd>Glow<cr>")
 nmap{"<leader>ff", "<cmd>Telescope find_files<cr>"}
+nmap{"<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>"}
 nmap{"<leader>fg", "<cmd>Telescope live_grep<cr>"}
 nmap{"<leader>fd", "<cmd>Telescope diagnostics<cr>"}
 nmap{"<leader>fb", "<cmd>Telescope buffers<cr>"}
