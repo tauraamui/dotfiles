@@ -1,5 +1,6 @@
 local feline = require('feline')
 local vi_mode = require('feline.providers.vi_mode')
+local git = require('feline.providers.git')
 
 --
 -- 1. define some constants
@@ -26,6 +27,23 @@ local MODE_COLORS = {
   ['SHELL'] = 'yellow',
   ['TERM'] = 'yellow',
   ['NONE'] = 'yellow',
+}
+
+-- default theme
+local DEFAULT = {
+  bg = '#1F1F23',
+  black = '#1B1B1B',
+  skyblue = '#50B0F0',
+  cyan = '#009090',
+  fg = '#D0D0D0',
+  green = '#60A040',
+  oceanblue = '#0066cc',
+  magenta = '#C26BDB',
+  orange = '#FF9000',
+  red = '#D10000',
+  violet = '#9E93E8',
+  white = '#FFFFFF',
+  yellow = '#E1E120',
 }
 
 -- gruvbox theme
@@ -117,6 +135,13 @@ function provide_mode(component, opts)
   return vi_mode.get_vim_mode()
 end
 
+-- provide git branch name
+function provide_git_branch(component, opts)
+  --if git.git_info_exists() == 0 then return '' end
+  --return ' ' .. git.git_branch()
+  return ' ' .. git.git_branch()
+end
+
 --- provide the buffer's file name
 function provide_filename(component, opts)
   return get_filename()
@@ -152,7 +177,7 @@ local components = {
 -- insert the mode component at the beginning of the left section
 table.insert(components.active[LEFT], {
   name = 'mode',
-  provider = wrapped_provider(provide_mode, wrap),
+  provider = provide_mode(),
   right_sep = 'slant_right',
   -- hl needs to be a function to avoid calling get_mode_color
   -- before feline initiation
@@ -164,14 +189,26 @@ table.insert(components.active[LEFT], {
   end,
 })
 
--- insert the filename component after the mode component
+-- insert the git branch component after the mode component
+table.insert(components.active[LEFT], {
+  name = 'gitbranch',
+  provider = wrapped_provider(provide_git_branch, wrap_left),
+  right_sep = 'slant_right',
+  hl = {
+    bg = 'white',
+    fg = 'black',
+  },
+})
+
+-- insert the filename component after the gitbranch component
 table.insert(components.active[LEFT], {
   name = 'filename',
   provider = wrapped_provider(provide_filename, wrap_left),
   right_sep = 'slant_right',
   hl = {
-    bg = 'white',
-    fg = 'black',
+    bg = 'oceanblue',
+    fg = 'white',
+    style = 'bold',
   },
 })
 
@@ -213,7 +250,7 @@ table.insert(components.inactive[LEFT], {
 --
 
 feline.setup({
-  theme = GRUVBOX,
-  components = components,
-  vi_mode_colors = MODE_COLORS,
+  --theme = DEFAULT,
+  --components = components,
+  --vi_mode_colors = MODE_COLORS,
 })

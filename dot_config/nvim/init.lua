@@ -90,7 +90,7 @@ vim.cmd.colorscheme "oxocarbon"
 
 if vim.g.neovide then
 	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h9.45:#e-subpixelantialias" }
-	vim.g.neovide_transparency = 0.955
+	vim.g.neovide_transparency = 0.855
 	vim.g.transparency = 0.1
 	-- vim.g.neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * 0.9))
 end
@@ -99,6 +99,7 @@ require('me.globals')
 require('me.nvimtree')
 require('me.lsp')
 require('me.options')
-require('me.feline')
+-- require('me.feline')
+require('me.mineline')
 require('me.keymap')
 require('me.telescope')
