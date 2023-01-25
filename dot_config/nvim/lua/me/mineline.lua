@@ -41,6 +41,30 @@ local DEFAULT = {
   yellow = '#E1E120',
 }
 
+-- pastel theme
+local PASTEL = {
+  bg = '#1e1e1e',
+  offbg = '#343434',
+  midbg = '#3c3c3c',
+  bribg = '#47474f',
+  black = '#1B1B1B',
+  skyblue = '#7fc9fa',
+  cyan = '#58fcfc',
+  fg = '#D0D0D0',
+  green = '#78fa7e',
+  oceanblue = '#6eaff0',
+  magenta = '#de8cf5',
+  orange = '#fab457',
+  red = '#ff5252',
+  offred = '#e23737',
+  violet = '#a699f7',
+  briwhite = '#ffffff',
+  white = '#e3e3e3',
+  offwhite = '#cdcdcd',
+  yellow = '#ffff6e',
+  offyellow = '#f7df7e',
+}
+-- not used, just here for visual reference
 local seperators = {
   vertical_bar = '┃',
   vertical_bar_thin = '│',
@@ -85,18 +109,6 @@ table.insert(components.active[LEFT], {
   }
 })
 
--- icon version of VIM mode
---table.insert(components.active[LEFT], {
---  provider = 'vi_mode',
---  hl = function()
---    return {
---      name = vi_mode_utils.get_mode_highlight_name(),
---      fg = vi_mode_utils.get_mode_color(),
---      style = 'bold',
---    }
---  end,
---})
-
 -- name version of VIM mode
 table.insert(components.active[LEFT], {
   provider = 'vi_mode',
@@ -109,7 +121,8 @@ table.insert(components.active[LEFT], {
     }
   end,
   left_sep = {
-    { str = '  ', hl = function() return { bg = vi_mode_utils.get_mode_color() } end },
+    'left_rounded',
+    { str = ' ', hl = function() return { bg = vi_mode_utils.get_mode_color() } end },
   },
   right_sep = {
     { str = ' ', hl = function() return { bg = vi_mode_utils.get_mode_color() } end },
@@ -122,30 +135,33 @@ table.insert(components.active[LEFT], {
   provider = 'git_branch',
   hl = {
     fg = 'white',
-    bg = 'oceanblue',
+    bg = 'offbg',
     style = 'bold',
   },
-  left_sep = 'slant_left_2',
-  right_sep = {
-    str = 'slant_right',
+  left_sep = {
+      'slant_left_2',
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
   },
+  right_sep = {
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+      'slant_right',
+  },
+  icon = ' ',
 })
 
 table.insert(components.active[LEFT], {
   provider = 'file_info',
   hl = {
       fg = 'white',
-      bg = 'oceanblue',
-      style = 'bold',
+      bg = 'midbg',
   },
   left_sep = {
       'slant_left_2',
-      { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
+      { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
   },
   right_sep = {
-      { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
+      { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
       'slant_right',
-      ' ',
   },
 })
 
@@ -163,62 +179,108 @@ table.insert(components.active[LEFT], {
 --  },
 --})
 
-table.insert(components.active[LEFT], {
-  provider = 'position',
-  left_sep = ' ',
-  right_sep = {
-      ' ',
-      {
-          str = 'slant_right_2_thin',
-          hl = {
-              fg = 'fg',
-              bg = 'bg',
-          },
-      },
-  },
-})
+-- table.insert(components.active[LEFT], {
+--   provider = 'position',
+--   left_sep = ' ',
+--   right_sep = {
+--       ' ',
+--       {
+--           str = 'slant_right_2_thin',
+--           hl = {
+--               fg = 'fg',
+--               bg = 'bg',
+--           },
+--       },
+--   },
+-- })
 
 table.insert(components.active[LEFT], {
   provider = 'diagnostic_errors',
-  hl = { fg = 'red' }
+  hl = {
+    fg = 'red',
+    bg = 'offbg'
+  },
+  left_sep = {
+      'slant_left_2',
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+  },
+  right_sep = {
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+      'slant_right',
+  },
+  icon = '󰅚 ',
 })
 
 table.insert(components.active[LEFT], {
   provider = 'diagnostic_warnings',
-  hl = { fg = 'yellow' }
+  hl = {
+    fg = 'yellow',
+    bg = 'offbg'
+  },
+  left_sep = {
+      'slant_left_2',
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+  },
+  right_sep = {
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+      'slant_right',
+  },
+  icon = ' ',
 })
 
 table.insert(components.active[LEFT], {
   provider = 'diagnostic_hints',
-  hl = { fg = 'cyan' }
+  hl = {
+    fg = 'cyan',
+    bg = 'offbg'
+  },
+  left_sep = {
+      'slant_left_2',
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+  },
+  right_sep = {
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+      'slant_right',
+  },
 })
 
 table.insert(components.active[LEFT], {
   provider = 'diagnostic_info',
-  hl = { fg = 'skyblue' }
+  hl = {
+    fg = 'skyblue',
+    bg = 'offbg'
+  },
+  left_sep = {
+      'slant_left_2',
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+  },
+  right_sep = {
+      { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
+      'slant_right',
+  },
 })
 
-table.insert(components.active[RIGHT], {
+table.insert(components.active[LEFT], {
   provider = 'git_diff_added',
   hl = {
     fg = 'green',
-    bg = 'black',
+    -- bg = 'black',
   },
 })
 
-table.insert(components.active[RIGHT], {
+table.insert(components.active[LEFT], {
   provider = 'git_diff_changed',
   hl = {
     fg = 'orange',
-    bg = 'black',
+    -- bg = 'black',
   },
 })
 
-table.insert(components.active[RIGHT], {
+table.insert(components.active[LEFT], {
   provider = 'git_diff_removed',
   hl = {
     fg = 'red',
-    bg = 'black',
+    -- bg = 'black',
   },
   right_sep = {
     str = ' ',
@@ -230,12 +292,30 @@ table.insert(components.active[RIGHT], {
 })
 
 table.insert(components.active[RIGHT], {
+  provider = 'position',
+  hl = {
+      fg = 'briwhite',
+      bg = 'offred',
+      style = 'bold',
+  },
+  left_sep = {
+      'slant_left',
+      { str = ' ', hl = { bg = 'offred', fg = 'NONE' } },
+  },
+  right_sep = {
+      { str = ' ', hl = { bg = 'offred', fg = 'NONE' } },
+      'slant_right_2',
+      ' ',
+  },
+})
+
+table.insert(components.active[RIGHT], {
   provider = 'line_percentage',
   hl = {
     style = 'bold',
   },
   left_sep = ' ',
-  right_sep = ' ',
+  right_sep = '  ',
 })
 
 table.insert(components.active[RIGHT], {
@@ -247,20 +327,33 @@ table.insert(components.active[RIGHT], {
 })
 
 table.insert(components.inactive[LEFT], {
-  provider = 'file_info',
+  provider = 'file_type',
   hl = {
       fg = 'white',
       bg = 'oceanblue',
       style = 'bold',
   },
+  left_sep = {
+      str = ' ',
+      hl = {
+          fg = 'NONE',
+          bg = 'oceanblue',
+      },
+  },
   right_sep = {
-      { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
-      'slant_right_2',
+      {
+          str = ' ',
+          hl = {
+              fg = 'NONE',
+              bg = 'oceanblue',
+          },
+      },
       ' ',
   },
 })
 
 feline.setup({
+  theme = PASTEL,
   components = components,
   vi_mode_colors = MODE_COLORS,
 })

@@ -14,6 +14,8 @@ local options = {
  writebackup = false,
  swapfile = false,
  clipboard = "unnamedplus",
+ ignorecase = true,
+ smartcase = true,
 }
 
 for k, v in pairs(options) do
