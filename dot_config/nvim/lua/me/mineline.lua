@@ -50,13 +50,14 @@ local PASTEL = {
   black = '#1B1B1B',
   skyblue = '#7fc9fa',
   cyan = '#58fcfc',
-  fg = '#D0D0D0',
+  fg = '#d0d0d0',
   green = '#78fa7e',
   oceanblue = '#6eaff0',
   magenta = '#de8cf5',
   orange = '#fab457',
   red = '#ff5252',
   offred = '#e23737',
+  brired = '#ff3c3c',
   violet = '#a699f7',
   briwhite = '#ffffff',
   white = '#e3e3e3',
@@ -153,14 +154,14 @@ table.insert(components.active[LEFT], {
   provider = 'file_info',
   hl = {
       fg = 'white',
-      bg = 'midbg',
+      bg = 'bribg',
   },
   left_sep = {
       'slant_left_2',
-      { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
+      { str = ' ', hl = { bg = 'bribg', fg = 'NONE' } },
   },
   right_sep = {
-      { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
+      { str = ' ', hl = { bg = 'bribg', fg = 'NONE' } },
       'slant_right',
   },
 })
@@ -197,7 +198,7 @@ table.insert(components.active[LEFT], {
 table.insert(components.active[LEFT], {
   provider = 'diagnostic_errors',
   hl = {
-    fg = 'red',
+    fg = 'brired',
     bg = 'offbg'
   },
   left_sep = {
