@@ -109,12 +109,11 @@ table.insert(components.active[LEFT], {
     }
   end,
   left_sep = {
-    { str = 'block' },
-    'block',
+    { str = '  ', hl = function() return { bg = vi_mode_utils.get_mode_color() } end },
   },
   right_sep = {
-    { str = 'block' },
-    'slant_right_2',
+    { str = ' ', hl = function() return { bg = vi_mode_utils.get_mode_color() } end },
+    'slant_right',
   },
   icon = '',
 })
@@ -123,16 +122,12 @@ table.insert(components.active[LEFT], {
   provider = 'git_branch',
   hl = {
     fg = 'white',
-    bg = 'black',
+    bg = 'oceanblue',
     style = 'bold',
   },
   left_sep = 'slant_left_2',
   right_sep = {
     str = 'slant_right',
-    hl = {
-        fg = 'NONE',
-        bg = 'black',
-    },
   },
 })
 
@@ -144,12 +139,12 @@ table.insert(components.active[LEFT], {
       style = 'bold',
   },
   left_sep = {
-      'slant_left',
+      'slant_left_2',
       { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
   },
   right_sep = {
       { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
-      'slant_right_2',
+      'slant_right',
       ' ',
   },
 })
@@ -267,6 +262,5 @@ table.insert(components.inactive[LEFT], {
 
 feline.setup({
   components = components,
+  vi_mode_colors = MODE_COLORS,
 })
-
-
