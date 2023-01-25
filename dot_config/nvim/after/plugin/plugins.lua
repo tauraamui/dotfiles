@@ -152,8 +152,7 @@ return require('packer').startup(function(use)
   --File browsing
   use 'nvim-telescope/telescope-file-browser.nvim'
 
-  --Buffer navigation
-  --use 'nvim-lualine/lualine.nvim'
+  -- Status line
   use 'feline-nvim/feline.nvim'
 
   --Haskell
