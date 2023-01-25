@@ -103,11 +103,19 @@ table.insert(components.active[LEFT], {
   hl = function()
     return {
       name = vi_mode_utils.get_mode_highlight_name(),
-      fg = vi_mode_utils.get_mode_color(),
+      fg = 'black',
+      bg = vi_mode_utils.get_mode_color(),
       style = 'bold',
     }
   end,
-  right_sep = ' ',
+  left_sep = {
+    { str = 'block' },
+    'block',
+  },
+  right_sep = {
+    { str = 'block' },
+    'slant_right_2',
+  },
   icon = '',
 })
 
@@ -118,8 +126,9 @@ table.insert(components.active[LEFT], {
     bg = 'black',
     style = 'bold',
   },
+  left_sep = 'slant_left_2',
   right_sep = {
-    str = ' ',
+    str = 'slant_right',
     hl = {
         fg = 'NONE',
         bg = 'black',
@@ -135,7 +144,7 @@ table.insert(components.active[LEFT], {
       style = 'bold',
   },
   left_sep = {
-      'slant_left_2',
+      'slant_left',
       { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
   },
   right_sep = {
@@ -239,6 +248,20 @@ table.insert(components.active[RIGHT], {
   hl = {
     fg = 'skyblue',
     style = 'bold',
+  },
+})
+
+table.insert(components.inactive[LEFT], {
+  provider = 'file_info',
+  hl = {
+      fg = 'white',
+      bg = 'oceanblue',
+      style = 'bold',
+  },
+  right_sep = {
+      { str = ' ', hl = { bg = 'oceanblue', fg = 'NONE' } },
+      'slant_right_2',
+      ' ',
   },
 })
 
