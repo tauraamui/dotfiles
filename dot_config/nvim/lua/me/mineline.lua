@@ -329,26 +329,17 @@ table.insert(components.active[RIGHT], {
 table.insert(components.inactive[LEFT], {
   provider = 'file_type',
   hl = {
-      fg = 'white',
-      bg = 'oceanblue',
+      fg = 'briwhite',
+      bg = 'midbg',
       style = 'bold',
   },
   left_sep = {
-      str = ' ',
-      hl = {
-          fg = 'NONE',
-          bg = 'oceanblue',
-      },
+    'left_rounded',
+    { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
   },
   right_sep = {
-      {
-          str = ' ',
-          hl = {
-              fg = 'NONE',
-              bg = 'oceanblue',
-          },
-      },
-      ' ',
+    { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
+    'right_rounded',
   },
 })
 
