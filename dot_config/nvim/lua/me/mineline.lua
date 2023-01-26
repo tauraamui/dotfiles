@@ -1,4 +1,5 @@
 local feline = require('feline')
+local file = require('feline.providers.file')
 local vi_mode_utils = require('feline.providers.vi_mode')
 
 -- left and right constants (first and second items of the components array)
@@ -103,12 +104,27 @@ local components = {
   },
 }
 
-table.insert(components.active[LEFT], {
-  provider = '▊ ',
-  hl = {
-    fg = 'skyblue',
-  }
-})
+function bo_nvimtree()
+  return vim.bo.filetype == 'NvimTree'
+end
+
+function provide_file_type(component, opts)
+  if bo_nvimtree() then return '' end
+  return file.file_type(component, {})
+end
+
+function provide_short_path(component, opts)
+  if bo_nvimtree() then return '' end
+  opts = { type = 'relative-short' }
+  return file.file_info(component, opts)
+end
+
+--table.insert(components.active[LEFT], {
+--  provider = '▊ ',
+--  hl = {
+--    fg = 'skyblue',
+--  }
+--})
 
 -- name version of VIM mode
 table.insert(components.active[LEFT], {
@@ -155,6 +171,7 @@ table.insert(components.active[LEFT], {
   hl = {
       fg = 'white',
       bg = 'bribg',
+      style = 'bold'
   },
   left_sep = {
       'slant_left_2',
@@ -327,8 +344,15 @@ table.insert(components.active[RIGHT], {
   },
 })
 
+--table.insert(components.inactive[LEFT], {
+--  provider = '▊ ',
+--  hl = {
+--    fg = 'oceanblue',
+--  }
+--})
+
 table.insert(components.inactive[LEFT], {
-  provider = 'file_type',
+  provider = provide_file_type,
   hl = {
       fg = 'briwhite',
       bg = 'midbg',
@@ -340,9 +364,17 @@ table.insert(components.inactive[LEFT], {
   },
   right_sep = {
     { str = ' ', hl = { bg = 'midbg', fg = 'NONE' } },
-    'right_rounded',
   },
 })
+
+table.insert(components.inactive[LEFT], {
+  provider = provide_short_path,
+  hl = {
+      fg = 'briwhite',
+      bg = 'midbg',
+  },
+})
+
 
 feline.setup({
   theme = PASTEL,
