@@ -40,9 +40,13 @@ nmap{"<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>"}
 nmap{"<leader>fg", "<cmd>Telescope live_grep<cr>"}
 nmap{"<leader>fd", "<cmd>Telescope diagnostics<cr>"}
 nmap{"<leader>fb", "<cmd>Telescope buffers<cr>"}
+nmap{"<leader>fr", "<cmd>Telescope lsp_references<cr>"}
 nmap{"<leader>ft", "<cmd>TodoQuickFix<cr>"}
 nmap{"<leader>gb", "<cmd>Gitsigns blame_line<cr>"}
 
+
 nmap{"<leader>tt", "<cmd>NvimTreeToggle<cr>"}
 nmap{"<leader>tcf", ":lua require'neotest'.run.run()<CR>"}
+nmap{"<leader>tcw", ":lua require'neotest'.run.run(vim.fn.getcwd())<CR>"}
+nmap{"<leader>tsw", ":lua require'neotest'.summary.open()<CR>"}
 
