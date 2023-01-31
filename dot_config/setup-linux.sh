@@ -39,6 +39,8 @@ EOF
 # configure git to use default username and email
 # TODO:(tauraamui): need to add signing key somehow and also
 #                   the aliasing of https://github to git@github
+touch ~/.gitconfig
+echo '[url "ssh://git@github.com/"]\n\tinsteadOf = https://github.com/' >> ~/.gitconfig
 git config --global user.name "tauraamui"
 git config --global user.email "adampstringer@protonmail.com"
 
