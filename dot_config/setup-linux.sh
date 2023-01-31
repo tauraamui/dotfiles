@@ -9,17 +9,22 @@ sudo -s -u $USER<<EOF
     sudo apt install -y build-essential
 EOF
 
+git config --global user.name "tauraamui"
+git config --global user.email "adampstringer@protonmail.com"
+ssh-keygen -t ed25519 -C "adampstringer@protonmail.com" -f ~/.ssh/id_ed25519 -N ""
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
 sh -c "$(curl -fsLS get.chezmoi.io)"
 chmod u+x $CHEZMOI
 
 $CHEZMOI init https://github.com/$GITHUB_USERNAME/dotfiles.git
 $CHEZMOI apply
 
-wget -O ~/bin/nvim.deb https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
-
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  .local/share/nvim/site/pack/packer/start/packer.nvim
 
+wget -O ~/bin/nvim.deb https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
 sudo -s -u $USER<<EOF
   sudo apt install ~/bin/nvim.deb
 EOF
