@@ -25,6 +25,7 @@ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install 
 export GITHUB_USERNAME=tauraamui
 # the fetch script for chezmoi puts it into a standard path I know ahead of time
 export CHEZMOI=~/bin/chezmoi
+export GO=~/.gvm/versions/go1.19.linux.amd64/bin/go
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 
 wget -O lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -55,11 +56,11 @@ $CHEZMOI apply
 # setup go
 wget -O ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.0/gvm-linux-amd64
 chmod +x ~/bin/gvm
-eval "$(gvm 1.19)"
-go version
+eval "$(~/bin/gvm 1.19)"
+$GO version
 
 # install jump utility
-go install github.com/gsamokovarov/jump@latest
+$GO install github.com/gsamokovarov/jump@latest
 
 # install starship
 curl -sS https://starship.rs/install.sh | sh
