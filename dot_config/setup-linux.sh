@@ -11,6 +11,7 @@ sudo -s -u $USER<<EOF
     sudo apt install -y xclip
     sudo apt install -y fish
     echo /usr/bin/fish | sudo tee -a /etc/shells
+    sudo apt install -y kitty
 EOF
 
 # setup fish
