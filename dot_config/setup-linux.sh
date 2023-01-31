@@ -36,14 +36,6 @@ sudo -s -u $USER<<EOF
   sudo install lazygit /usr/local/bin
 EOF
 
-# configure git to use default username and email
-# TODO:(tauraamui): need to add signing key somehow and also
-#                   the aliasing of https://github to git@github
-touch ~/.gitconfig
-echo '[url "ssh://git@github.com/"]\n\tinsteadOf = https://github.com/' >> ~/.gitconfig
-git config --global user.name "tauraamui"
-git config --global user.email "adampstringer@protonmail.com"
-
 # generate local SSH key for auth
 ssh-keygen -t ed25519 -C "adampstringer@protonmail.com" -f ~/.ssh/id_ed25519 -N ""
 eval "$(ssh-agent -s)"
@@ -96,4 +88,11 @@ mv ~/fonts/Hasklug/*.otf ~/.local/share/fonts
 fc-cache -f -v
 rm -r ~/fonts/Hasklug
 
+# configure git to use default username and email
+# TODO:(tauraamui): need to add signing key somehow and also
+#                   the aliasing of https://github to git@github
+touch ~/.gitconfig
+echo '[url "ssh://git@github.com/"]\n\tinsteadOf = https://github.com/' >> ~/.gitconfig
+git config --global user.name "tauraamui"
+git config --global user.email "adampstringer@protonmail.com"
 
