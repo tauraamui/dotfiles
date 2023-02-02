@@ -163,7 +163,7 @@ table.insert(components.active[LEFT], {
       { str = ' ', hl = { bg = 'offbg', fg = 'NONE' } },
       'slant_right',
   },
-  icon = ' ',
+  icon = ' ',
 })
 
 table.insert(components.active[LEFT], {

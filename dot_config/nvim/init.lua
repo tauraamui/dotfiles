@@ -89,9 +89,9 @@ vim.cmd.colorscheme "oxocarbon"
 -- vim.cmd.colorscheme "catppuccin"
 
 if vim.g.neovide then
-	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h9:#h-slight:#e-subpixelantialias" }
-	vim.g.neovide_scale_factor = 1.1
-	vim.g.neovide_transparency = 0.855
+	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h7" }
+	vim.g.neovide_scale_factor = 1.0
+	-- vim.g.neovide_transparency = 0.855
 	vim.g.transparency = 0.1
 	-- vim.g.neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * 0.9))
 end

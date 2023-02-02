@@ -48,5 +48,7 @@ nmap{"<leader>gb", "<cmd>Gitsigns blame_line<cr>"}
 nmap{"<leader>tt", "<cmd>NvimTreeToggle<cr>"}
 nmap{"<leader>tcf", ":lua require'neotest'.run.run()<CR>"}
 nmap{"<leader>tcw", ":lua require'neotest'.run.run(vim.fn.getcwd())<CR>"}
+nmap{"<leader>ts", ":lua require'neotest'.run.stop()<CR>"}
+nmap{"<leader>ta", ":lua require'neotest'.run.attach()<CR>"}
 nmap{"<leader>tsw", ":lua require'neotest'.summary.open()<CR>"}
 
