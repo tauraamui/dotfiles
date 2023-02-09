@@ -16,6 +16,7 @@ local options = {
  clipboard = "unnamedplus",
  ignorecase = true,
  smartcase = true,
+ termguicolors = true,
 }
 
 for k, v in pairs(options) do
