@@ -59,6 +59,9 @@ $GO install github.com/gsamokovarov/jump@latest
 # install starship
 curl -sS https://starship.rs/install.sh | sh
 
+# setup/download tmux plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # setup nvim
 #
 # download and install packer plugin
