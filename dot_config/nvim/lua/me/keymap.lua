@@ -44,8 +44,11 @@ nmap{"<leader>fr", "<cmd>Telescope lsp_references<cr>"}
 nmap{"<leader>ft", "<cmd>TodoQuickFix<cr>"}
 nmap{"<leader>gb", "<cmd>Gitsigns blame_line<cr>"}
 
+nmap{"<leader>cl", "<cmd>CoverageLoad<cr>"}
+nmap{"<leader>cs", "<cmd>CoverageShow<cr>"}
 
 nmap{"<leader>tt", "<cmd>NvimTreeToggle<cr>"}
+nmap{"<leader>tx", "<cmd>ToggleTerm<cr>"}
 nmap{"<leader>tcf", ":lua require'neotest'.run.run()<CR>"}
 nmap{"<leader>tcw", ":lua require'neotest'.run.run(vim.fn.getcwd())<CR>"}
 nmap{"<leader>ts", ":lua require'neotest'.run.stop()<CR>"}
