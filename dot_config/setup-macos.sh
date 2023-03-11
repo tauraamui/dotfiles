@@ -15,6 +15,7 @@ $BREWBIN install fish
 $BREWBIN install tmux
 $BREWBIN install curl
 $BREWBIN install wget
+$BREWBIN install ripgrep
 $BREWBIN install htop
 $BREWBIN install kitty
 $BREWBIN install neovim
@@ -52,6 +53,9 @@ $GO version
 
 # install jump utility
 $GO install github.com/gsamokovarov/jump@latest
+
+# install gopls language server
+$GO install golang.org/x/tools/gopls@latest
 
 # install starship
 curl -sS https://starship.rs/install.sh | sh
