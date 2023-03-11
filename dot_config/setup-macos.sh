@@ -38,7 +38,6 @@ ssh-add ~/.ssh/id_ed25519
 
 # setup chezmoi, fetch and apply config files from Github
 $CHEZMOI init https://github.com/$GITHUB_USERNAME/dotfiles.git
-$CHEZMOI apply
 
 # setup go
 $WGET -O ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.0/gvm-darwin-arm64
@@ -64,11 +63,5 @@ unzip ~/fonts/hasklig.zip -d ~/fonts/Hasklug
 mv ~/fonts/Hasklug/*.otf ~/Library/Fonts
 rm -r ~/fonts/Hasklug
 
-# configure git to use default username and email
-# TODO:(tauraamui): need to add signing key somehow and also
-#                   the aliasing of https://github to git@github
-touch ~/.gitconfig
-echo '[url "ssh://git@github.com/"]\n\tinsteadOf = https://github.com/' >> ~/.gitconfig
-git config --global user.name "tauraamui"
-git config --global user.email "adampstringer@protonmail.com"
+$CHEZMOI apply
 
