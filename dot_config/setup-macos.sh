@@ -21,9 +21,9 @@ $BREWBIN install chezmoi
 
 # setting fish shell as default
 sudo -s -u $USER<<EOF
-  sudo /bin/bash -c 'echo $(which fish) >> /etc/shells'
+  sudo /bin/bash -c 'echo $(FISHBIN) >> /etc/shells'
 EOF
-chsh -s $(which fish)
+chsh -s $FISHBIN
 #
 # install oh-my-fish
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | $FISHBIN
