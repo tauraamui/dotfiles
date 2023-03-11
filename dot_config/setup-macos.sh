@@ -2,7 +2,11 @@
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-export BREWBIN=/opt/homebrew/bin/brew
+export BREWDIR=/opt/homebrew/bin
+export BREWBIN=$BREWDIR/brew
+export FISHBIN=$BREWDIR/fish
+export CHEZMOI=$BREWDIR/chezmoi
+export WGET=$BREWDIR/wget
 export GITHUB_USERNAME=tauraamui
 
 $BREWBIN install fish
@@ -20,7 +24,7 @@ EOF
 chsh -s $(which fish)
 #
 # install oh-my-fish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | $FISHBIN
 
 mkdir ~/bin
 
@@ -34,7 +38,7 @@ $CHEZMOI init https://github.com/$GITHUB_USERNAME/dotfiles.git
 $CHEZMOI apply
 
 # setup go
-wget -O ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.0/gvm-darwin-arm64
+$WGET -O ~/bin/gvm https://github.com/andrewkroh/gvm/releases/download/v0.5.0/gvm-darwin-arm64
 chmod +x ~/bin/gvm
 eval "$(~/bin/gvm 1.19)"
 export GO=$(which go)
