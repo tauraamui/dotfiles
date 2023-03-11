@@ -1,10 +1,11 @@
+{{- if eq .chezmoi.hostname "penguin"}}
+
 if not set -q TMUX
 	set -g TMUX tmux new-session -d -s base
 	eval $TMUX
 	tmux attach-session -d -t base
 end
 
-{{- if eq .chezmoi.hostname "penguin"}}
 ~/bin/gvm 1.19 | source
 
 set -gx PATH $PATH ~/.local/bin
@@ -32,4 +33,10 @@ alias nv=neovide
 jump shell fish | source
 
 starship init fish | source
+
+if not set -q TMUX
+	set -g TMUX tmux new-session -d -s base
+	eval $TMUX
+	tmux attach-session -d -t base
+end
 {{- end  }}
