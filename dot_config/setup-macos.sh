@@ -17,6 +17,8 @@ $BREWBIN install curl
 $BREWBIN install wget
 $BREWBIN install neovim
 $BREWBIN install jesseduffield/lazygit/lazygit
+$BREWBIN tap wez/wezterm
+$BREWBIN install --cask wez/wezterm/wezterm
 $BREWBIN install chezmoi
 
 # setting fish shell as default
@@ -27,9 +29,7 @@ chsh -s $FISHBIN
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | $FISHBIN
 
 mkdir ~/bin
-sudo -s -u $USER<<EOF
-  mkdir /usr/local/bin
-EOF
+sudo mkdir /usr/local/bin
 
 # generate local SSH key for auth
 ssh-keygen -t ed25519 -C "adampstringer@protonmail.com" -f ~/.ssh/id_ed25519 -N ""
@@ -56,6 +56,13 @@ curl -sS https://starship.rs/install.sh | sh
 # download and install packer plugin
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  .local/share/nvim/site/pack/packer/start/packer.nvim
+
+# install patched nerd font with ligatures
+mkdir ~/fonts
+wget -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
+unzip ~/fonts/hasklig.zip -d ~/fonts/Hasklug
+mv ~/fonts/Hasklug/*.otf ~/Library/Fonts
+rm -r ~/fonts/Hasklug
 
 # configure git to use default username and email
 # TODO:(tauraamui): need to add signing key somehow and also
