@@ -58,7 +58,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 
 # install patched nerd font with ligatures
 mkdir ~/fonts
-wget -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
+$WGET -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
 unzip ~/fonts/hasklig.zip -d ~/fonts/Hasklug
 mv ~/fonts/Hasklug/*.otf ~/Library/Fonts
 rm -r ~/fonts/Hasklug
