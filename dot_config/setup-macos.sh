@@ -15,10 +15,14 @@ $BREWBIN install fish
 $BREWBIN install tmux
 $BREWBIN install curl
 $BREWBIN install wget
+$BREWBIN install htop
+$BREWBIN install kitty
 $BREWBIN install neovim
 $BREWBIN install jesseduffield/lazygit/lazygit
 $BREWBIN tap wez/wezterm
 $BREWBIN install --cask wez/wezterm/wezterm
+$BREWBIN install --cask neovide
+$BREWBIN install --cask brave-browser
 $BREWBIN install chezmoi
 
 # setting fish shell as default
