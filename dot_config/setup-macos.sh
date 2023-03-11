@@ -7,8 +7,10 @@ export BREWBIN=$BREWDIR/brew
 export FISHBIN=$BREWDIR/fish
 export CHEZMOI=$BREWDIR/chezmoi
 export WGET=$BREWDIR/wget
+export GIT=$BREWDIR/git
 export GITHUB_USERNAME=tauraamui
 
+$BREWBIN install git
 $BREWBIN install fish
 $BREWBIN install tmux
 $BREWBIN install curl
@@ -27,6 +29,7 @@ chsh -s $(which fish)
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | $FISHBIN
 
 mkdir ~/bin
+mkdir /usr/local/bin
 
 # generate local SSH key for auth
 ssh-keygen -t ed25519 -C "adampstringer@protonmail.com" -f ~/.ssh/id_ed25519 -N ""
@@ -54,12 +57,9 @@ curl -sS https://starship.rs/install.sh | sh
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  .local/share/nvim/site/pack/packer/start/packer.nvim
 
-# setup/download tmux plugins
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
 # install patched nerd font with ligatures
 mkdir ~/fonts
-wget -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
+$WGET -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
 unzip ~/fonts/hasklig.zip -d ~/fonts/Hasklug
 mkdir ~/.local/share/fonts
 mv ~/fonts/Hasklug/*.otf ~/.local/share/fonts
