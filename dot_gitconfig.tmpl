@@ -1,0 +1,10 @@
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[user]
+	name = tauraamui
+	email = adampstringer@protonmail.com
+{{- if eq .chezmoi.hostname "Adams-Macbook-Pro-2.local" }}
+	signingkey = E7108104793E3863
+[commit]
+	gpgsign = true
+{{- end  }}
