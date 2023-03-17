@@ -3,8 +3,13 @@
 [user]
 	name = tauraamui
 	email = adampstringer@protonmail.com
-{{- if eq .chezmoi.hostname "Adams-Macbook-Pro-2.local" }}
+{{- if or (eq .chezmoi.hostname "Adams-Macbook-Pro-2.local") (eq .chezmoi.hostname "penguin") }}
+	{{- if (eq .chezmoi.hostname "Adams-Macbook-Pro-2.local") }}
 	signingkey = E7108104793E3863
+	{{- end }}
+	{{- if (eq .chezmoi.hostname "penguin") }}
+	signingkey = 2C6AB603B3FCD013
+	{{- end }}
 [commit]
 	gpgsign = true
-{{- end  }}
+{{- end }}
