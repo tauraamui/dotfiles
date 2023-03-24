@@ -89,11 +89,16 @@ vim.cmd.colorscheme "oxocarbon"
 -- vim.cmd.colorscheme "catppuccin"
 
 if vim.g.neovide then
-	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h7" }
-	vim.g.neovide_scale_factor = 1.0
+	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h8.5" }
 	-- vim.g.neovide_transparency = 0.855
 	vim.g.transparency = 0.1
+	vim.g.neovide_cursor_animation_length = 0
 	-- vim.g.neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * 0.9))
+	{{- if (eq .chezmoi.hostname "penguin") }}
+	vim.g.neovide_scale_factor = 0.9
+	{{- else }}
+	vim.g.neovide_scale_factor = 1.0
+	{{- end }}
 end
 
 require('me.globals')
