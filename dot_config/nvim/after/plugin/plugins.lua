@@ -14,7 +14,9 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use { 'catppuccin/nvim', as = 'catppuccin' }
 
-  use {'nyoom-engineering/oxocarbon.nvim'}
+  -- Color scheme
+  use 'EdenEast/nightfox.nvim'
+  -- use 'nyoom-engineering/oxocarbon.nvim'
 
   --Treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }

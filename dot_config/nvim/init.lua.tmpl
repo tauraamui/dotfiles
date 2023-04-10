@@ -1,12 +1,24 @@
 -- Aesthetic
 -- pcall catches errors if the plugin doesn't load
---local ok, catppuccin = pcall(require, "catppuccin")
---if not ok then return end
---vim.g.catppuccin_flavour = "frappe"
---catppuccin.setup()
+-- local ok, catppuccin = pcall(require, "catppuccin")
+-- if not ok then return end
+-- vim.g.catppuccin_flavour = "frappe"
+-- catppuccin.setup()
 -- vim.cmd [[colorscheme catppuccin]]
-vim.opt.background = "dark"
-vim.cmd.colorscheme "oxocarbon"
+
+-- define colorscheme customisations
+require("nightfox").setup({ groups = {
+  carbonfox = {
+	  String         = { fg = "#57d7d9" },
+	  Identifier     = { fg = "#968024" }, -- (preferred) any variable name
+	  Function       = { fg = "#ff7eb6" }, -- function name (also: methods for classes)
+	  Operator       = { link = "Function" }, -- "sizeof", "+", "*", etc.
+	  Keyword        = { link = "Function" }, -- any other keyword
+	  Exception      = { link = "Function" }, -- try, catch, throw
+	  Type           = { fg = "#ffffff" }, -- (preferred) int, long, char, etc.
+  }
+}})
+vim.cmd.colorscheme "carbonfox"
 
 if vim.g.neovide then
 	{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "penguin") }}
