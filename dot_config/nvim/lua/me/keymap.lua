@@ -49,6 +49,7 @@ nmap { "K", "<cmd>Lspsaga hover_doc<CR>", opts }
 -- buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 nmap { "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts }
 nmap { "<leader>ds", "<cmd>Lspsaga show_line_diagnostics<CR>", opts }
+nmap { "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts }
 nmap { "<leader>dj", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts }
 nmap { "<leader>dk", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts }
 
