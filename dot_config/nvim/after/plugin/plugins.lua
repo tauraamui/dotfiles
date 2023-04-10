@@ -177,6 +177,14 @@ return require('packer').startup(function(use)
   --Telescope
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
+ use({
+    'glepnir/lspsaga.nvim',
+    branch = 'main',
+    config = function()
+      require('lspsaga').setup({})
+    end,
+})
+
   --git diff
   use 'sindrets/diffview.nvim'
 

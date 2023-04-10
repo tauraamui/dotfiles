@@ -35,23 +35,31 @@ treesitter.setup { ensure_installed = "all", highlight = { enable = true } }
 
 -- keymaps
 vim.keymap.set("n", "<leader>p", "<cmd>Glow<cr>")
-nmap{"<leader>ff", "<cmd>Telescope find_files<cr>"}
-nmap{"<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>"}
-nmap{"<leader>fg", "<cmd>Telescope live_grep<cr>"}
-nmap{"<leader>fd", "<cmd>Telescope diagnostics<cr>"}
-nmap{"<leader>fb", "<cmd>Telescope buffers<cr>"}
-nmap{"<leader>fr", "<cmd>Telescope lsp_references<cr>"}
-nmap{"<leader>ft", "<cmd>TodoQuickFix<cr>"}
-nmap{"<leader>gb", "<cmd>Gitsigns blame_line<cr>"}
+nmap{ "<leader>ff", "<cmd>Telescope find_files<cr>" }
+nmap{ "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>" }
+nmap{ "<leader>fg", "<cmd>Telescope live_grep<cr>" }
+nmap{ "<leader>fd", "<cmd>Telescope diagnostics<cr>" }
+nmap{ "<leader>fb", "<cmd>Telescope buffers<cr>" }
+nmap{ "<leader>fr", "<cmd>Telescope lsp_references<cr>" }
+nmap{ "<leader>ft", "<cmd>TodoQuickFix<cr>" }
+nmap{ "<leader>gb", "<cmd>Gitsigns blame_line<cr>" }
 
-nmap{"<leader>cl", "<cmd>CoverageLoad<cr>"}
-nmap{"<leader>cs", "<cmd>CoverageShow<cr>"}
+nmap { "K", "<cmd>Lspsaga hover_doc<CR>", opts }
+--nmap{"K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts}
+-- buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+nmap { "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts }
+nmap { "<leader>ds", "<cmd>Lspsaga show_line_diagnostics<CR>", opts }
+nmap { "<leader>dj", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts }
+nmap { "<leader>dk", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts }
 
-nmap{"<leader>tt", "<cmd>NvimTreeToggle<cr>"}
-nmap{"<leader>tx", "<cmd>ToggleTerm<cr>"}
-nmap{"<leader>tcf", ":lua require'neotest'.run.run()<CR>"}
-nmap{"<leader>tcw", ":lua require'neotest'.run.run(vim.fn.getcwd())<CR>"}
-nmap{"<leader>ts", ":lua require'neotest'.run.stop()<CR>"}
-nmap{"<leader>ta", ":lua require'neotest'.run.attach()<CR>"}
-nmap{"<leader>tsw", ":lua require'neotest'.summary.open()<CR>"}
+nmap{ "<leader>cl", "<cmd>CoverageLoad<cr>" }
+nmap{ "<leader>cs", "<cmd>CoverageShow<cr>" }
+
+nmap{ "<leader>tt", "<cmd>NvimTreeToggle<cr>" }
+nmap{ "<leader>tx", "<cmd>ToggleTerm<cr>" }
+nmap{ "<leader>tcf", ":lua require'neotest'.run.run()<CR>" }
+nmap{ "<leader>tcw", ":lua require'neotest'.run.run(vim.fn.getcwd())<CR>" }
+nmap{ "<leader>ts", ":lua require'neotest'.run.stop()<CR>" }
+nmap{ "<leader>ta", ":lua require'neotest'.run.attach()<CR>" }
+nmap{ "<leader>tsw", ":lua require'neotest'.summary.open()<CR>" }
 
