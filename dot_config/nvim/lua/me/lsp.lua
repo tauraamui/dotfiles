@@ -109,7 +109,6 @@ function OrganizeImports(timeoutms)
     end
 end
 
--- lsp_installer.setup{}
 local lspconfig = require('lspconfig')
 lspconfig.gopls.setup {
     capabilities = capabilities,
@@ -124,32 +123,18 @@ lspconfig.gopls.setup {
     },
 }
 
-lspconfig.golangci_lint_ls.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    gopls = {
-      gofumpt = false,
-    },
-  },
-  flags = {
-    debounce_text_changes = 150,
-  },
-}
+-- lspconfig.golangci_lint_ls.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   settings = {
+--     gopls = {
+--       gofumpt = false,
+--     },
+--   },
+--   flags = {
+--     debounce_text_changes = 150,
+--   },
+-- }
 
 lspconfig.rust_analyzer.setup{}
-
---lspconfig.golangci_lint_ls.setup {
---    capabilities = capabilities,
---    on_attach = on_attach,
---    settings = {
---        gopls = {
---            gofumpt = true,
---        },
---    },
---    flags = {
---        debounce_text_changes = 150,
---    },
---}
-
 
