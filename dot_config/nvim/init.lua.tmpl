@@ -21,11 +21,14 @@ require("nightfox").setup({ groups = {
 vim.cmd.colorscheme "carbonfox"
 
 if vim.g.neovide then
-	{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "penguin") }}
+	{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "Adams-Mac-mini") (eq .chezmoi.hostname "penguin") }}
 	vim.g.neovide_transparency = 0.9
 	{{- end }}
-	{{- if (eq .chezmoi.hostname "penguin") }}
+	{{- if (eq .chezmoi.hostname "penguin")}}
 	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h9.25" }
+	vim.g.neovide_scale_factor = 0.9
+	{{- else if (eq .chezmoi.hostname "Adams-Mac-mini") }}
+	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h13" }
 	vim.g.neovide_scale_factor = 0.9
 	{{- else }}
 	vim.opt.guifont = { "Hasklug Nerd Font Mono", ":h11" }
