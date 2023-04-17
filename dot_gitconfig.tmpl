@@ -3,11 +3,12 @@
 [user]
 	name = tauraamui
 	email = adampstringer@protonmail.com
-{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "penguin") }}
+{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "Adams-Mac-mini") (eq .chezmoi.hostname "penguin") }}
 	{{- if (eq .chezmoi.hostname "Adams-MBP") }}
 	signingkey = 1062B59D5867C843
-	{{- end }}
-	{{- if (eq .chezmoi.hostname "penguin") }}
+	{{- else if (eq .chezmoi.hostname "Adams-Mac-mini") }}
+	signingkey = 12FB7EFE3549A1F5
+	{{- else if (eq .chezmoi.hostname "penguin") }}
 	signingkey = 2C6AB603B3FCD013
 	{{- end }}
 [commit]
