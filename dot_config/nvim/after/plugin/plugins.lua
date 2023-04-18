@@ -14,12 +14,22 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use { 'catppuccin/nvim', as = 'catppuccin' }
 
+  -- Greeting screen
+  use {
+    "startup-nvim/startup.nvim",
+    requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+    config = function()
+      require("startup").setup(require("startup.themes.dew"))
+    end
+  }
+
   -- Color scheme
   use 'EdenEast/nightfox.nvim'
   -- use 'nyoom-engineering/oxocarbon.nvim'
 
   --Treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use { 'nvim-treesitter/playground' }
   use 'williamboman/mason.nvim'
 
   --Markdown preview
