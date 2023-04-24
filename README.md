@@ -1,6 +1,6 @@
 ## How to use
 
-This collection of dot files is managed by [Chezmoi](https://www.chezmoi.io/). Follow the instructions on the homepage if you would like to download and use them. Be aware that this is obviously my own custom setup. Additionally, the .tmpl files will generate different output depending on the hostname of the machine you're using. Some files will just not be complete nor working if you don't have any of the matching hostnames which is likely the case. YMMV.
+This collection of dot files is managed by [Chezmoi](https://www.chezmoi.io/). Follow the instructions on the homepage if you would like to download and use them. Be aware that this is obviously my own custom setup. Additionally, most of the .tmpl files will generate different output depending on the hostname of the machine you're using. Some files will just not be complete nor working if you don't have any of the matching hostnames which is likely the case. YMMV.
 
 ## Neovim showcase
 <img width="835" alt="Screenshot 2023-04-18 at 17 40 36" src="https://user-images.githubusercontent.com/3159648/232846137-036692a4-bb30-48c6-91f5-9ad300cf9c1e.png">
