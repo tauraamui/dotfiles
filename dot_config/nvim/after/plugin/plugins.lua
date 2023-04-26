@@ -27,6 +27,8 @@ return require('packer').startup(function(use)
   use 'EdenEast/nightfox.nvim'
   -- use 'nyoom-engineering/oxocarbon.nvim'
 
+  use { 'christoomey/vim-tmux-navigator', lazy = false }
+
   --Treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/playground' }

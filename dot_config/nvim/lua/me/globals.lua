@@ -5,6 +5,7 @@ local globals = {
     glow_border = "shadow",
     loaded_netrw = 1,
     loaded_netrwPlugin = 1,
+    tmux_navigator_no_mappings = 1,
 }
 
 for k, v in pairs(globals) do
