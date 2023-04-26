@@ -8,6 +8,7 @@ end
 
 ~/bin/gvm 1.19 | source
 
+set -g fish_greeting
 set -gx PATH $PATH ~/.local/bin
 set -gx PATH $PATH ~/go/bin
 set -gx GPG_TTY (tty)
@@ -22,6 +23,7 @@ starship init fish | source
 {{- else if eq .chezmoi.os "darwin" }}
 ~/bin/gvm 1.19 | source
 
+set -g fish_greeting
 set -gx PATH $PATH ~/.local/bin
 set -gx PATH $PATH ~/go/bin
 set -gx PATH $PATH ~/bin
