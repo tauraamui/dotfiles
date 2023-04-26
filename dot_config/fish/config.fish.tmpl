@@ -25,6 +25,9 @@ starship init fish | source
 set -gx PATH $PATH ~/.local/bin
 set -gx PATH $PATH ~/go/bin
 set -gx PATH $PATH ~/bin
+{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "Adams-MacBook-Pro")}}
+set -gx PATH $PATH ~/bin/ziginstall
+{{- end  }}
 set -gx PATH $PATH /opt/homebrew/bin
 set -gx GPG_TTY (tty)
 
@@ -39,4 +42,11 @@ if not set -q TMUX
 	eval $TMUX
 	tmux attach-session -d -t base
 end
+
+{{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "Adams-MacBook-Pro")}}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/adam/google-cloud-sdk/path.fish.inc' ]; . '/Users/adam/google-cloud-sdk/path.fish.inc'; end
+{{- end  }}
+
 {{- end  }}
