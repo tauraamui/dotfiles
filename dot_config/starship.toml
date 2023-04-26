@@ -125,7 +125,7 @@ style = "bright-black"
 [time]
 disabled = false
 time_format = "%r" # Hour:Minute Format
-style = "fg:#33658A"
+style = "fg:#626167"
 format = '[$time]($style)'
 
 [fill]
