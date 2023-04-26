@@ -1,11 +1,3 @@
-
-~/bin/gvm 1.19 | source
-set -g fish_greeting
-fish_vi_key_bindings
-jump shell fish | source
-starship init fish | source
-alias nv="neovide"
-
 {{- if eq .chezmoi.hostname "penguin"}}
 set -gx PATH $PATH ~/.local/bin
 set -gx PATH $PATH ~/go/bin
@@ -28,3 +20,11 @@ set -gx GPG_TTY (tty)
 if [ -f '/Users/adam/google-cloud-sdk/path.fish.inc' ]; . '/Users/adam/google-cloud-sdk/path.fish.inc'; end
 {{- end  }}
 {{- end  }}
+
+~/bin/gvm 1.19 | source
+set -g fish_greeting
+fish_vi_key_bindings
+jump shell fish | source
+starship init fish | source
+alias nv="neovide"
+
