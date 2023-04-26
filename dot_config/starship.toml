@@ -28,7 +28,7 @@ add_newline = false
 # ~/.config/starship.toml
 
 [directory]
-style = "#76c5fa"
+style = "#75c5fa"
 
 [character]
 success_symbol = "[❯](purple)"
@@ -38,7 +38,7 @@ vimcmd_symbol = "[❮](green)"
 [c]
 symbol = ""
 style = "fg:#6EB0D4"
-format = '[ $symbol ($version) ]($style)'
+format = '[$symbol ($version) ]($style)'
 
 [docker_context]
 symbol = ""
@@ -76,46 +76,46 @@ style = "bright-black"
 
 [golang]
 symbol = ""
-style = "fg:#6EB0D4"
-format = '[$symbol ($version)]($style)'
+style = "fg:cyan"
+format = '[$symbol ($version) ]($style)'
 
 [haskell]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#605084"
+format = '[$symbol ($version) ]($style)'
 
 [java]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#da3b33"
+format = '[$symbol ($version) ]($style)'
 
 [julia]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#6c82db"
+format = '[$symbol ($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#95cc48"
+format = '[$symbol ($version) ]($style)'
 
 [nim]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#ddc057"
+format = '[$symbol ($version) ]($style)'
 
 [rust]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#fffeee"
+format = '[$symbol ($version) ]($style)'
 
 [scala]
 symbol = ""
-style = "bg:#6EB0D4 fg:#fffeee"
-format = '[$symbol ($version)]($style)'
+style = "fg:#cd422d"
+format = '[$symbol ($version) ]($style)'
 
 [cmd_duration]
-format = "[$duration]($style)"
+format = "[$duration ]($style)"
 style = "yellow"
 
 [python]
