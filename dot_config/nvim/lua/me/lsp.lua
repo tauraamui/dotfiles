@@ -109,7 +109,17 @@ function OrganizeImports(timeoutms)
     end
 end
 
+local lsp = require('lsp-zero').preset({})
+lsp.ensure_installed({
+  'gopls',
+  'zls',
+  'rust_analyzer',
+})
+lsp.setup()
+
+
 local lspconfig = require('lspconfig')
+-- Go LSP
 lspconfig.gopls.setup {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -122,6 +132,11 @@ lspconfig.gopls.setup {
         debounce_text_changes = 150,
     },
 }
+-- zig LSP
+lspconfig.zls.setup{}
+-- Rust LSP
+lspconfig.rust_analyzer.setup{}
+
 
 -- lspconfig.golangci_lint_ls.setup {
 --   capabilities = capabilities,
@@ -135,6 +150,3 @@ lspconfig.gopls.setup {
 --     debounce_text_changes = 150,
 --   },
 -- }
-
-lspconfig.rust_analyzer.setup{}
-
