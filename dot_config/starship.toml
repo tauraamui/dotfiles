@@ -18,14 +18,14 @@ $rust\
 $scala\
 $docker_context\
 $cmd_duration\
+$fill\
+$time\
 $line_break\
 $python\
 $character"""
 
 # Disable the blank line at the start of the prompt
 add_newline = false
-
-# ~/.config/starship.toml
 
 [directory]
 style = "#75c5fa"
@@ -121,4 +121,13 @@ style = "yellow"
 [python]
 format = "[$virtualenv]($style) "
 style = "bright-black"
+
+[time]
+disabled = false
+time_format = "%r" # Hour:Minute Format
+style = "fg:#33658A"
+format = '[$time]($style)'
+
+[fill]
+symbol = ' '
 
