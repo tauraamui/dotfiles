@@ -1,0 +1,11 @@
+local wezterm = require 'wezterm'
+
+return {
+    font = wezterm.font('Hasklug Nerd Font Mono', { weight = 'DemiBold' }),
+    color_scheme = 'ibm3270 (Gogh)',
+    enable_tab_bar = false,
+    {{- if or (eq .chezmoi.hostname "Adams-MBP") (eq .chezmoi.hostname "Adams-MacBook-Pro") (eq .chezmoi.hostname "Adams-Mac-mini") (eq .chezmoi.hostname "penguin") }}
+    window_background_opacity = 0.91,
+    {{- end }}
+}
+
