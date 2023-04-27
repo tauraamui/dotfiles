@@ -6,6 +6,8 @@ return {
     enable_tab_bar = false,
     {{- if eq .chezmoi.os "darwin" }}
     window_background_opacity = 0.8,
+    {{- else }}
+    window_background_opacity = 0.95,
     {{- end }}
 }
 
