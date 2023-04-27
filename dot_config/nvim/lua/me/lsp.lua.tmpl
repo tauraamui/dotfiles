@@ -112,7 +112,9 @@ end
 local lsp = require('lsp-zero').preset({})
 lsp.ensure_installed({
   'gopls',
+  {{- if not (eq .chezmoi.hostname "penguin")}}
   'zls',
+  {{- end }}
   'rust_analyzer',
 })
 lsp.setup()
@@ -132,8 +134,10 @@ lspconfig.gopls.setup {
         debounce_text_changes = 150,
     },
 }
+{{- if not (eq .chezmoi.hostname "penguin")}}
 -- zig LSP
 lspconfig.zls.setup{}
+{{- end }}
 -- Rust LSP
 lspconfig.rust_analyzer.setup{}
 
