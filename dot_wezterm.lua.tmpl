@@ -9,5 +9,8 @@ return {
     {{- else }}
     window_background_opacity = 0.95,
     {{- end }}
+	{{- if (eq .chezmoi.hostname "penguin") }}
+    font_size = 15,
+    {{- end }}
 }
 
