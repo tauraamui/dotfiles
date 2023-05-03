@@ -136,6 +136,13 @@ return require('packer').startup(function(use)
   --end
   --}
 
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
+
   -- LSP Zero autocomplete
   use {
     'VonHeikemen/lsp-zero.nvim',
