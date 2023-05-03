@@ -17,8 +17,6 @@ local options = {
  ignorecase = true,
  smartcase = true,
  termguicolors = true,
- number = true,
- relativenumber = true,
 }
 
 for k, v in pairs(options) do
