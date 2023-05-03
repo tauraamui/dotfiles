@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use { 'catppuccin/nvim', as = 'catppuccin' }
 
-  -- Greeting screen
+  -- greeting screen
   use {
     "startup-nvim/startup.nvim",
     requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
@@ -23,13 +23,13 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- Color scheme
+  -- color scheme
   use 'EdenEast/nightfox.nvim'
   -- use 'nyoom-engineering/oxocarbon.nvim'
 
   use { 'christoomey/vim-tmux-navigator', lazy = false }
 
-  --Treesitter
+  -- treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use { 'nvim-treesitter/playground' }
   use 'williamboman/mason.nvim'
@@ -43,7 +43,7 @@ return require('packer').startup(function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
   })
 
-  -- Git line blame visualisation
+  -- git line blame visualisation
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -51,6 +51,7 @@ return require('packer').startup(function(use)
     end
   }
 
+  -- terminal toggle
   use {
     'akinsho/toggleterm.nvim',
     tag = '*',
@@ -59,7 +60,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- File tree visualisation
+  -- file tree visualisation
   use {
     'nvim-tree/nvim-tree.lua',
     requires = {
@@ -67,16 +68,16 @@ return require('packer').startup(function(use)
     }
   }
 
-  -- Indent guide lines
+  -- indent guide lines
   use "lukas-reineke/indent-blankline.nvim"
 
-  -- Autopair brackets
+  -- autopair brackets
   use {
       "windwp/nvim-autopairs",
       config = function() require("nvim-autopairs").setup {} end
   }
 
-  -- Go coverage
+  -- go coverage
   use({
     "andythigpen/nvim-coverage",
     requires = "nvim-lua/plenary.nvim",
@@ -85,7 +86,7 @@ return require('packer').startup(function(use)
     end,
   })
 
-  -- Go test runner adapter
+  -- go test runner adapter
   use({
     "nvim-neotest/neotest",
     requires = {
@@ -116,7 +117,7 @@ return require('packer').startup(function(use)
     end,
   })
 
-  --Language packs
+  -- language packs
   use 'sheerun/vim-polyglot'
 
   --Nvim motions
@@ -163,13 +164,13 @@ return require('packer').startup(function(use)
  --use 'neovim/nvim-lspconfig'
  --use 'williamboman/nvim-lsp-installer'
 
-  --File browsing
+  -- file browsing
   use 'nvim-telescope/telescope-file-browser.nvim'
 
-  -- Status line
+  -- status line
   use 'feline-nvim/feline.nvim'
 
-  --Haskell
+  -- haskell
   use 'neovimhaskell/haskell-vim'
   use 'alx741/vim-hindent'
 
@@ -180,15 +181,15 @@ return require('packer').startup(function(use)
   use 'theHamsta/nvim-dap-virtual-text'
   use 'nvim-telescope/telescope-dap.nvim'
 
-  --Grammar checking because I can't english
+  -- grammar checking because I can't english
   use 'rhysd/vim-grammarous'
 
-  --Telescope Requirements
+  -- telescope requirements
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
 
-  --Telescope
+  -- telescope
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
  use({
