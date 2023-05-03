@@ -52,13 +52,6 @@ nmap{ "<leader>fr", "<cmd>Telescope lsp_references<cr>" }
 nmap{ "<leader>ft", "<cmd>TodoQuickFix<cr>" }
 nmap{ "<leader>gb", "<cmd>Gitsigns blame_line<cr>" }
 
-nmap{ "<leader>xx", "<cmd>TroubleToggle<cr>" }
-nmap{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>" }
-nmap{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>" }
-nmap{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>" }
-nmap{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>" }
-nmap{ "<leader>xx", "<cmd>TroubleToggle<cr>" }
-
 nmap { "K", "<cmd>Lspsaga hover_doc<CR>", opts }
 --nmap{"K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts}
 -- buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -67,6 +60,7 @@ nmap { "<leader>ds", "<cmd>Lspsaga show_line_diagnostics<CR>", opts }
 nmap { "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts }
 nmap { "<leader>dj", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts }
 nmap { "<leader>dk", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts }
+nmap { "<leader>dd", "<cmd>Lspsaga show_buf_diagnostics<CR>", opts }
 
 nmap{ "<leader>cl", "<cmd>CoverageLoad<cr>" }
 nmap{ "<leader>cs", "<cmd>CoverageShow<cr>" }
