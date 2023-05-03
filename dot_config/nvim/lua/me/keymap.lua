@@ -52,6 +52,13 @@ nmap{ "<leader>fr", "<cmd>Telescope lsp_references<cr>" }
 nmap{ "<leader>ft", "<cmd>TodoQuickFix<cr>" }
 nmap{ "<leader>gb", "<cmd>Gitsigns blame_line<cr>" }
 
+nmap{ "<leader>xx", "<cmd>TroubleToggle<cr>" }
+nmap{ "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>" }
+nmap{ "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>" }
+nmap{ "<leader>xl", "<cmd>TroubleToggle loclist<cr>" }
+nmap{ "<leader>xq", "<cmd>TroubleToggle quickfix<cr>" }
+nmap{ "<leader>xx", "<cmd>TroubleToggle<cr>" }
+
 nmap { "K", "<cmd>Lspsaga hover_doc<CR>", opts }
 --nmap{"K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts}
 -- buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)

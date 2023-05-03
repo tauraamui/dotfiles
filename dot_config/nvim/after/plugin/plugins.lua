@@ -23,6 +23,12 @@ return require('packer').startup(function(use)
     end
   }
 
+  -- diagnostic manager
+  use {
+    "folke/trouble.nvim",
+    requires = "nvim-tree/nvim-web-devicons",
+  }
+
   -- color scheme
   use 'EdenEast/nightfox.nvim'
   -- use 'nyoom-engineering/oxocarbon.nvim'
