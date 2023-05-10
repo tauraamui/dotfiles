@@ -49,7 +49,7 @@ nmap{ "<leader>fo", "<cmd>Telescope oldfiles<cr>" }
 nmap{ "<leader>fb", "<cmd>Telescope buffers<cr>" }
 nmap{ "<leader>fv", "<cmd>Telescope file_browser<cr>" }
 nmap{ "<leader>fr", "<cmd>Telescope lsp_references<cr>" }
-nmap{ "<leader>ft", "<cmd>TodoQuickFix<cr>" }
+nmap{ "<leader>ft", "<cmd>TodoTelescope<cr>" }
 nmap{ "<leader>gb", "<cmd>Gitsigns blame_line<cr>" }
 
 nmap { "K", "<cmd>Lspsaga hover_doc<CR>", opts }
