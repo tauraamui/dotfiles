@@ -33,7 +33,8 @@ return require('packer').startup(function(use)
   use 'EdenEast/nightfox.nvim'
   -- use 'nyoom-engineering/oxocarbon.nvim'
 
-  use { 'christoomey/vim-tmux-navigator', lazy = false }
+  -- use { 'christoomey/vim-tmux-navigator', lazy = false }
+  use({ 'mrjones2014/smart-splits.nvim', tag = 'v1.2.2' })
 
   -- treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }

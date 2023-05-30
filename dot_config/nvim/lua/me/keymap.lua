@@ -36,10 +36,29 @@ treesitter.setup { ensure_installed = "all", highlight = { enable = true } }
 -- keymaps
 vim.keymap.set("n", "<leader>p", "<cmd>Glow<cr>")
 
-nmap { "<C-w>h", "<cmd>TmuxNavigateLeft<cr>" }
-nmap { "<C-w>j", "<cmd>TmuxNavigateDown<cr>" }
-nmap { "<C-w>k", "<cmd>TmuxNavigateUp<cr>" }
-nmap { "<C-w>l", "<cmd>TmuxNavigateRight<cr>" }
+-- recommended mappings
+-- resizing splits
+-- these keymaps will also accept a range,
+-- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
+vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+-- swapping buffers between windows
+vim.keymap.set('n', '<leader><leader>h', require('smart-splits').swap_buf_left)
+vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down)
+vim.keymap.set('n', '<leader><leader>k', require('smart-splits').swap_buf_up)
+vim.keymap.set('n', '<leader><leader>l', require('smart-splits').swap_buf_right)
+
+nmap { "<C-w>h", ":lua require'smart-splits'.move_cursor_left()<CR>" }
+nmap { "<C-w>j", ":lua require'smart-splits'.move_cursor_down()<CR>" }
+nmap { "<C-w>k", ":lua require'smart-splits'.move_cursor_up()<CR>" }
+nmap { "<C-w>l", ":lua require'smart-splits'.move_cursor_right()<CR>" }
+
+-- nmap { "<C-w>h", "<cmd>TmuxNavigateLeft<cr>" }
+-- nmap { "<C-w>j", "<cmd>TmuxNavigateDown<cr>" }
+-- nmap { "<C-w>k", "<cmd>TmuxNavigateUp<cr>" }
+-- nmap { "<C-w>l", "<cmd>TmuxNavigateRight<cr>" }
 
 nmap{ "<leader>ff", "<cmd>Telescope find_files<cr>" }
 nmap{ "<leader>fc", "<cmd>Telescope current_buffer_fuzzy_find<cr>" }
