@@ -112,13 +112,21 @@ end
 local lsp = require('lsp-zero').preset({})
 lsp.ensure_installed({
   'gopls',
-  {{- if not (eq .chezmoi.hostname "penguin")}}
-  'zls',
-  {{- end }}
-  'rust_analyzer',
 })
 lsp.setup()
 
+local util = require 'lspconfig.util'
+local lsp_configurations = require('lspconfig.configs')
+if not lsp_configurations.v_analyzer then
+  lsp_configurations.v_analyzer = {
+    default_config = {
+      name = 'v-analyzer',
+      cmd = {'v-analyzer'},
+      filetypes = {'vlang', 'v', 'vsh', 'vv'},
+      root_dir = util.root_pattern('v.mod', '.git'),
+    }
+  }
+end
 
 local lspconfig = require('lspconfig')
 -- Go LSP
@@ -134,12 +142,9 @@ lspconfig.gopls.setup {
         debounce_text_changes = 150,
     },
 }
-{{- if not (eq .chezmoi.hostname "penguin")}}
--- zig LSP
-lspconfig.zls.setup{}
-{{- end }}
--- Rust LSP
-lspconfig.rust_analyzer.setup{}
+
+lspconfig.v_analyzer.setup({})
+vim.cmd([[au BufNewFile,BufRead *.v set filetype=vlang]])
 
 
 -- lspconfig.golangci_lint_ls.setup {
