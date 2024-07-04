@@ -3,7 +3,7 @@
 # pre-req install of required tools and packages
 sudo -s -u $USER<<EOF
     sudo apt update
-	sudo apt install -y git
+    sudo apt install -y git
     sudo apt install -y build-essential
     sudo apt install -y wget
     sudo apt install -y curl
@@ -11,15 +11,7 @@ sudo -s -u $USER<<EOF
     sudo apt install -y xclip
     sudo apt install -y fish
     echo /usr/bin/fish | sudo tee -a /etc/shells
-    sudo apt install -y kitty
 EOF
-
-# setup fish
-echo "setting fish as default shell"
-chsh -s /usr/bin/fish
-#
-# install oh-my-fish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 # EXPORTS
 export GITHUB_USERNAME=tauraamui
@@ -68,9 +60,11 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  .local/share/nvim/site/pack/packer/start/packer.nvim
  # acquire specific deb package for nvim (should use same version fetching lazygit is using)
-wget -O ~/bin/nvim.deb https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
+wget -O ~/bin/nvim-v0.10.0.appimage https://github.com/neovim/neovim/releases/download/v0.10.0/nvim.appimage
+chmod u+x ~/bin/nvim-v0.10.0.appimage
+
 sudo -s -u $USER<<EOF
-  sudo apt install ~/bin/nvim.deb
+  sudo ln -s ~/bin/nvim-v0.10.0.appimage /usr/share/nvim
 EOF
 rm ~/bin/nvim.deb
 # install nvim plugin 3rd party dependancies
@@ -91,11 +85,18 @@ mv ~/fonts/Hasklug/*.otf ~/.local/share/fonts
 fc-cache -f -v
 rm -r ~/fonts/Hasklug
 
+# setup fish
+echo "setting fish as default shell"
+chsh -s /usr/bin/fish
+#
+# install oh-my-fish
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+
 # configure git to use default username and email
 # TODO:(tauraamui): need to add signing key somehow and also
 #                   the aliasing of https://github to git@github
 touch ~/.gitconfig
-echo '[url "ssh://git@github.com/"]\n\tinsteadOf = https://github.com/' >> ~/.gitconfig
+# echo '[url "ssh://git@github.com/"]\n\tinsteadOf = https://github.com/' >> ~/.gitconfig
 git config --global user.name "tauraamui"
 git config --global user.email "adampstringer@protonmail.com"
 
