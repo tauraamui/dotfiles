@@ -78,12 +78,12 @@ rm ~/bin/ripgrep.deb
 
 # install patched nerd font with ligatures
 mkdir ~/fonts
-wget -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
-unzip ~/fonts/hasklig.zip -d ~/fonts/Hasklug
+wget -O ~/fonts/gohu.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Gohu.zip
+unzip ~/fonts/gohu.zip -d ~/fonts/Gohu
 mkdir ~/.local/share/fonts
-mv ~/fonts/Hasklug/*.otf ~/.local/share/fonts
+mv ~/fonts/Gohu/*.ttf ~/.local/share/fonts
 fc-cache -f -v
-rm -r ~/fonts/Hasklug
+rm -r ~/fonts/Gohu
 
 # setup fish
 echo "setting fish as default shell"

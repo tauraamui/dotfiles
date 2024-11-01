@@ -40,7 +40,7 @@ local function split_nav(resize_or_move, key)
 end
 
 return {
-    font = w.font('Hasklug Nerd Font Mono', { weight = 'DemiBold' }),
+    font = w.font('GohuFont uni11 Nerd Font', { weight = 'DemiBold' }),
     color_scheme = 'ibm3270 (Gogh)',
     enable_tab_bar = false,
     {{- if eq .chezmoi.os "darwin" }}
@@ -50,7 +50,7 @@ return {
     window_background_opacity = 0.8,
     {{- end }}
 	{{- if (eq .chezmoi.hostname "penguin") }}
-    font_size = 9.25,
+    font_size = 10,
     {{- end }}
     keys = {
         -- move between split panes
