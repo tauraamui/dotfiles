@@ -66,10 +66,10 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 
 # install patched nerd font with ligatures
 mkdir ~/fonts
-$WGET -O ~/fonts/hasklig.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hasklig.zip
-unzip ~/fonts/hasklig.zip -d ~/fonts/Hasklug
-mv ~/fonts/Hasklug/*.otf ~/Library/Fonts
-rm -r ~/fonts/Hasklug
+$WGET -O ~/fonts/gohu.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Gohu.zip
+unzip ~/fonts/gohu.zip -d ~/fonts/Gohu
+mv ~/fonts/Gohu/*.ttf ~/Library/Fonts
+rm -r ~/fonts/Gohu
 
 $CHEZMOI apply
 
