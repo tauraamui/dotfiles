@@ -10,6 +10,7 @@ sudo -s -u $USER<<EOF
     sudo apt install -y tmux
     sudo apt install -y xclip
     sudo apt install -y fish
+    sudo apt install -y nnn
     echo /usr/bin/fish | sudo tee -a /etc/shells
 EOF
 
