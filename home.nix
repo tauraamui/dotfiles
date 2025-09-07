@@ -200,7 +200,18 @@ in
       # Custom Fish configuration goes here
       set -g fish_greeting ""  # Disable greeting message
     '';
-    
+
+    # Ensure Nix environment is loaded
+    loginShellInit = ''
+      # Source Nix environment
+      if test -e ~/.nix-profile/etc/profile.d/nix.fish
+        source ~/.nix-profile/etc/profile.d/nix.fish
+      end
+      if test -e ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+        bass source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+      end
+    '';
+
     # Optional: Add shell aliases
     shellAliases = {
       ll = "ls -la";
