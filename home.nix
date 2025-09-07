@@ -195,6 +195,19 @@ in
   programs.fish = {
     enable = true;
     
+    # Fish plugins
+    plugins = [
+      {
+        name = "bass";
+        src = pkgs.fetchFromGitHub {
+          owner = "edc";
+          repo = "bass";
+          rev = "2fd3d2157d5271ca3575b13daec975ca4c10577a";
+          sha256 = "0mb01y1d0g8ilsr5m8a71j6xmqlyhf8w4xjf00wkk8k41cz3ypky";
+        };
+      }
+    ];
+
     # Optional: Add custom configuration
     interactiveShellInit = ''
       # Custom Fish configuration goes here
