@@ -22,17 +22,17 @@
     packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
 
     homeConfigurations."tauraamui" = home-manager.lib.homeManagerConfiguration {
-	pkgs = pkgs;
+      pkgs = pkgs;
 
-	extraSpecialArgs = {
-      gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
-        pkgs = pkgs;
+      extraSpecialArgs = {
+        gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
+          pkgs = pkgs;
+        };
       };
-	};
 
-	modules = [
-      ./home.nix
-    ];
+      modules = [
+        ./home.nix
+      ];
     };
   };
 }
