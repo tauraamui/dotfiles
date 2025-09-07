@@ -20,4 +20,14 @@ rm ~/.config/home-manager/home.nix
 ln -sf "$(pwd)/home.nix" ~/.config/home-manager/
 
 nix run home-manager/master -- switch --impure
+
+# Reload environment to see newly installed programs
+source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+
+# Set Fish as default shell
+FISH_PATH="$HOME/.nix-profile/bin/fish"
+if ! grep -q "$FISH_PATH" /etc/shells; then
+  echo "$FISH_PATH" | sudo tee -a /etc/shells
+fi
+chsh -s "$FISH_PATH"
 '
