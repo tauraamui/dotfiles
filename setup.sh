@@ -16,7 +16,8 @@ nix build
 
 nix run home-manager/master -- init
 
-cp ./home.nix ~/.config/home-manager/home.nix
+rm ~/.config/home-manager/home.nix
+ln -sf "$(pwd)/home.nix" ~/.config/home-manager/
 
-nix run home-manager/master -- switch
+nix run home-manager/master -- switch --impure
 '
