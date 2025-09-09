@@ -267,7 +267,7 @@ in
         style = "fg:#fffeee";
         format = "'[$symbol ($version) ]($style)'";
       };
-      scale = {
+      scala = {
         symbol = "";
         style = "fg:#cd422d";
         format = "'[$symbol ($version) ]($style)'";
@@ -287,7 +287,7 @@ in
         format = "'[$time]($style)'";
       };
       fill = {
-        symbol = "' '";
+        symbol = " ";
       };
     };
   };
