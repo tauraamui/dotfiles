@@ -89,7 +89,6 @@ let
     else "0000000000000000000000000000000000000000";
 in
 {
-  nixGL.packages = import <nixgl> { inherit pkgs; };
   home.username = "tauraamui";
   home.homeDirectory = "/home/tauraamui";
   home.stateVersion = "25.05";
@@ -105,6 +104,9 @@ in
       Environment="XDG_DATA_DIRS=%h/.nix-profile/share:%h/.local/share:%h/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
     '';
   };
+
+  nixGL.packages = import <nixgl> { inherit pkgs; };
+  nixGL.defaultWrapper = "mesa";
 
   home.packages = [
     pkgs.lazygit
@@ -136,10 +138,14 @@ in
   programs.neovim.enable = true;
   programs.tmux.enable = true;
   programs.ripgrep.enable = true;
-  programs.wezterm.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
   programs.obsidian.enable = true;
+
+  programs.wezterm = {
+    enable = true;
+    package = config.lib.nixGL.wrap pkgs.wezterm;
+  };
 
   programs.starship = {
     enable = true;
