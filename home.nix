@@ -137,11 +137,47 @@ in
 
   programs.home-manager.enable = true;
   programs.neovim.enable = true;
-  programs.tmux.enable = true;
   programs.ripgrep.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
   programs.obsidian.enable = true;
+
+  programs.tmux = {
+    enable = true;
+    keyMode = "vi";
+    prefix = "C-w";
+    baseIndex = 1;
+    mouse = true;
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      yank
+      {
+        plugin = dracula;
+        extraConfig = ''
+          set -g @dracula-plugins "battery ram-usage cpu-usage time weather"
+          set -g @dracula-show-powerline true
+          set -g @dracula-fixed-location "Oxford"
+          set -g @dracula-show-fahrenheit false
+          set -g @dracula-show-flags true
+          set -g @dracula-show-left-icon smiley
+        '';
+      }
+    ];
+    extraConfig = ''
+      # custom keybinds emulating vim like visual select and yank mode
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+
+      # open split panes within same PWD
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+
+      # enable full 256 colour support
+      set -ga terminal-overrides ',*256color*:smcup@:rmcup@,xterm*:Tc'
+      set -g status-position top
+    '';
+  };
 
   programs.ghostty = {
     enable = true;
