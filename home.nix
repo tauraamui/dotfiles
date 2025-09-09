@@ -89,6 +89,7 @@ let
     else "0000000000000000000000000000000000000000";
 in
 {
+  nixGL.packages = import <nixgl> { inherit pkgs; };
   home.username = "tauraamui";
   home.homeDirectory = "/home/tauraamui";
   home.stateVersion = "25.05";
