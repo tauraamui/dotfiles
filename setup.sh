@@ -33,4 +33,6 @@ if ! grep -q "$FISH_PATH" /etc/shells; then
   echo "$FISH_PATH" | sudo tee -a /etc/shells
 fi
 chsh -s "$FISH_PATH"
+
+gh auth login
 '

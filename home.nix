@@ -142,6 +142,11 @@ in
   programs.kitty.enable = true;
   programs.obsidian.enable = true;
 
+  programs.ghostty = {
+    enable = true;
+    package = config.lib.nixGL.wrap pkgs.ghostty;
+  };
+
   programs.wezterm = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.wezterm;
@@ -205,6 +210,21 @@ in
 	  insteadOf = "https://github.com/";
 	};
       };
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    hosts = {
+      "github.com" = {
+        user = "tauraamui";
+      };
+    };
+    settings = {
+      git_protocol = "ssh";
+    };
+    gitCredentialHelper = {
+      enable = true;
     };
   };
 
