@@ -196,22 +196,22 @@ in
       c = {
         symbol = "";
         style = "fg:#6EB0D4";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       docker_context = {
         symbol = "";
         style = "fg:#6EB0D4";
-        format = '[$symbol $context ]($style) $path';
+        format = "'[$symbol $context ]($style) $path'";
       };
       elixir = {
         symbol = "";
         style = "fg:#6EB0D4";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       elm = {
         symbol = "";
         style = "fg:#6EB0D4";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       git_branch = {
         format = "[$branch]($style)";
@@ -229,48 +229,48 @@ in
         stashed = "≡";
       };
       git_state = {
-        format = '\([$state( $progress_current/$progress_total)]($style)\) ';
+        format = "'\([$state( $progress_current/$progress_total)]($style)\) '";
         style = "bright-black";
       };
       golang = {
         symbol = "";
         style = "fg:cyan";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       haskell = {
         symbol = "";
         style = "fg:#605084";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       java = {
         symbol = "";
         style = "fg:#da3b33";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       julia = {
         symbol = "";
         style = "fg:#6c82db";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       nodejs = {
         symbol = "";
         style = "fg:#95cc48";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       nim = {
         symbol = "";
         style = "fg:#ddc057";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       rust = {
         symbol = "";
         style = "fg:#fffeee";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       scale = {
         symbol = "";
         style = "fg:#cd422d";
-        format = '[$symbol ($version) ]($style)';
+        format = "'[$symbol ($version) ]($style)'";
       };
       cmd_duration = {
         format = "[$duration ]($style)";
@@ -284,10 +284,10 @@ in
         disabled = false;
         time_format = "%T"; # 24 Hour:Minute:Second Format
         style = "fg:#626167";
-        format = '[$time]($style)';
+        format = "'[$time]($style)'";
       };
       fill {
-        symbol = ' ';
+        symbol = "' '";
       }
     };
   };
