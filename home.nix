@@ -95,6 +95,16 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  # Conditionally include XDG config only for penguin hostname
+  xdg = lib.optionalAttrs (builtins.pathExists "/etc/hostname" &&
+                           lib.hasInfix "penguin" (builtins.readFile "/etc/hostname")) {
+    configFile."systemd/user/cros-garcon.service.d/override.conf".text = ''
+      [Service]
+      Environment="PATH=%h/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/local/games:/usr/sbin:/usr/bin:/usr/games:/sbin:/bin"
+      Environment="XDG_DATA_DIRS=%h/.nix-profile/share:%h/.local/share:%h/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
+    '';
+  };
+
   home.packages = [
     pkgs.lazygit
     pkgs.htop
