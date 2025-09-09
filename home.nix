@@ -286,9 +286,9 @@ in
         style = "fg:#626167";
         format = "'[$time]($style)'";
       };
-      fill {
+      fill = {
         symbol = "' '";
-      }
+      };
     };
   };
 
