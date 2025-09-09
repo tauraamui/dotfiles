@@ -245,6 +245,7 @@ in
     interactiveShellInit = ''
       # Custom Fish configuration goes here
       set -g fish_greeting ""  # Disable greeting message
+      fish_add_path ~/.local/bin
     '';
 
     # Ensure Nix environment is loaded
