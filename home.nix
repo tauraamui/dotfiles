@@ -2,22 +2,22 @@
 
 let
   fingerprintFile = "${config.home.homeDirectory}/.config/nixos/gpg-fingerprint";
-  
+
   # Define the GPG key generation script directly in home.nix
   gpgKeyGeneratorScript = pkgs.writeShellScript "generate-gpg-key" ''
     set -euo pipefail
-    
+
     GPG_KEY_ID="adampstringer@protonmail.com"
     GPG_KEY_DIR="$HOME/.gnupg"
     FINGERPRINT_FILE="$HOME/.config/nixos/gpg-fingerprint"
-    
+
     echo "Ensuring GPG directory exists: $GPG_KEY_DIR"
     mkdir -p "$GPG_KEY_DIR"
     chmod 700 "$GPG_KEY_DIR"
-    
+
     # Create config directory for fingerprint file
     mkdir -p "$(dirname "$FINGERPRINT_FILE")"
-    
+
     # Check if fingerprint file exists and key is still valid
     if [[ -f "$FINGERPRINT_FILE" ]]; then
       EXISTING_FINGERPRINT=$(cat "$FINGERPRINT_FILE")
@@ -26,11 +26,11 @@ let
         exit 0
       fi
     fi
-    
+
     # Check if a key with the specified ID already exists
     if ! "${pkgs.gnupg}/bin/gpg" --list-secret-keys --with-colons "$GPG_KEY_ID" > /dev/null 2>&1; then
       echo "No GPG key found for $GPG_KEY_ID. Generating a new one..."
-      
+
       BATCH_FILE=$(mktemp)
       cat > "$BATCH_FILE" <<-EOF
         %echo Generating a new GPG key for $GPG_KEY_ID
@@ -45,34 +45,34 @@ let
         %commit
         %echo Key generation complete.
     EOF
-      
+
       # Use --pinentry-mode loopback to avoid pinentry requirement
       "${pkgs.gnupg}/bin/gpg" --batch --pinentry-mode loopback --gen-key "$BATCH_FILE"
       rm "$BATCH_FILE"
-      
+
       echo "GPG key generated successfully."
     else
       echo "GPG key for $GPG_KEY_ID already exists. Skipping generation."
     fi
-    
+
     # Extract the fingerprint
     FINGERPRINT=$("${pkgs.gnupg}/bin/gpg" --list-secret-keys --with-colons "$GPG_KEY_ID" \
       | ${pkgs.gawk}/bin/awk -F: '/^fpr:/ { print $10; exit }')
-    
+
     if [[ -z "$FINGERPRINT" ]]; then
       echo "Error: Could not determine GPG fingerprint for $GPG_KEY_ID."
       exit 1
     fi
-    
+
     echo "GPG_FINGERPRINT=$FINGERPRINT"
     echo "$FINGERPRINT" > "$FINGERPRINT_FILE"
     echo "Fingerprint saved to $FINGERPRINT_FILE"
   '';
-  
+
   # Script to update Git config with the correct fingerprint
   updateGitConfigScript = pkgs.writeShellScript "update-git-config" ''
     FINGERPRINT_FILE="$HOME/.config/nixos/gpg-fingerprint"
-    
+
     if [[ -f "$FINGERPRINT_FILE" ]]; then
       FINGERPRINT=$(cat "$FINGERPRINT_FILE")
       echo "Updating Git signing key to: $FINGERPRINT"
@@ -81,9 +81,9 @@ let
       echo "No fingerprint file found, skipping Git config update"
     fi
   '';
-  
+
   # Use a default fingerprint that will be replaced after activation
-  gpgSigningKeyFingerprint = 
+  gpgSigningKeyFingerprint =
     if builtins.pathExists fingerprintFile
     then builtins.replaceStrings ["\n"] [""] (builtins.readFile fingerprintFile)
     else "0000000000000000000000000000000000000000";
@@ -157,7 +157,6 @@ in
     enable = true;
     enableFishIntegration = true;
     settings = {
-      add_newline = false;
       format = lib.concatStrings [
         "$username"
         "$hostname"
@@ -184,11 +183,112 @@ in
         "$python"
         "$character"
       ];
+      add_newline = false;
+      directory = {
+        style = "#75c5fa";
+        fish_style_pwd_dir_length = 1;
+      };
       character = {
         success_symbol = "[❯](purple)";
         error_symbol = "[❯](red)";
         vimcmd_symbol = "[❮](green)";
       };
+      c = {
+        symbol = "";
+        style = "fg:#6EB0D4";
+        format = '[$symbol ($version) ]($style)';
+      };
+      docker_context = {
+        symbol = "";
+        style = "fg:#6EB0D4";
+        format = '[$symbol $context ]($style) $path';
+      };
+      elixir = {
+        symbol = "";
+        style = "fg:#6EB0D4";
+        format = '[$symbol ($version) ]($style)';
+      };
+      elm = {
+        symbol = "";
+        style = "fg:#6EB0D4";
+        format = '[$symbol ($version) ]($style)';
+      };
+      git_branch = {
+        format = "[$branch]($style)";
+        style = "bright-black";
+      };
+      git_status = {
+        format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed )]($style)";
+        style = "cyan";
+        conflicted = "=";
+        untracked = "⇡";
+        modified = "!";
+        staged = "+";
+        renamed = "»";
+        deleted = "✘";
+        stashed = "≡";
+      };
+      git_state = {
+        format = '\([$state( $progress_current/$progress_total)]($style)\) ';
+        style = "bright-black";
+      };
+      golang = {
+        symbol = "";
+        style = "fg:cyan";
+        format = '[$symbol ($version) ]($style)';
+      };
+      haskell = {
+        symbol = "";
+        style = "fg:#605084";
+        format = '[$symbol ($version) ]($style)';
+      };
+      java = {
+        symbol = "";
+        style = "fg:#da3b33";
+        format = '[$symbol ($version) ]($style)';
+      };
+      julia = {
+        symbol = "";
+        style = "fg:#6c82db";
+        format = '[$symbol ($version) ]($style)';
+      };
+      nodejs = {
+        symbol = "";
+        style = "fg:#95cc48";
+        format = '[$symbol ($version) ]($style)';
+      };
+      nim = {
+        symbol = "";
+        style = "fg:#ddc057";
+        format = '[$symbol ($version) ]($style)';
+      };
+      rust = {
+        symbol = "";
+        style = "fg:#fffeee";
+        format = '[$symbol ($version) ]($style)';
+      };
+      scale = {
+        symbol = "";
+        style = "fg:#cd422d";
+        format = '[$symbol ($version) ]($style)';
+      };
+      cmd_duration = {
+        format = "[$duration ]($style)";
+        style = "yellow";
+      };
+      python = {
+        format = "[$virtualenv]($style) ";
+        style = "bright-black";
+      };
+      time = {
+        disabled = false;
+        time_format = "%T"; # 24 Hour:Minute:Second Format
+        style = "fg:#626167";
+        format = '[$time]($style)';
+      };
+      fill {
+        symbol = ' ';
+      }
     };
   };
 
@@ -227,7 +327,7 @@ in
   # Enable and configure Fish shell
   programs.fish = {
     enable = true;
-    
+
     # Fish plugins
     plugins = [
       {
@@ -267,7 +367,7 @@ in
       ".." = "cd ..";
       "..." = "cd ../..";
     };
-    
+
     # Optional: Add functions
     functions = {
       # Example function
