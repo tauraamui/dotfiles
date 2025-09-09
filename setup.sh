@@ -11,7 +11,7 @@ cp ./flake.nix ~/
 bash -c '
 source ~/.nix-profile/etc/profile.d/nix.sh
 
-nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl && nix-channel update
+nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl && nix-channel --update
 nix-env -iA nixgl.auto.nixGLDefault
 
 nix flake update
@@ -22,7 +22,7 @@ nix run home-manager/master -- init
 rm ~/.config/home-manager/home.nix
 ln -sf "$(pwd)/home.nix" ~/.config/home-manager/
 
-nix run home-manager/master -- switch --impure
+nix run home-manager -- switch --impure
 
 # Reload environment to see newly installed programs
 source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
