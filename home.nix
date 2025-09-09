@@ -116,6 +116,7 @@ in
     pkgs.gawk
     pkgs.git
     pkgs.vlang
+    pkgs.gitAndTools.gh
   ];
 
   home.file = { };
