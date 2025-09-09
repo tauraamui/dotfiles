@@ -216,11 +216,6 @@ in
 
   programs.gh = {
     enable = true;
-    hosts = {
-      "github.com" = {
-        user = "tauraamui";
-      };
-    };
     settings = {
       git_protocol = "ssh";
     };
