@@ -5,24 +5,13 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daem
 
 mkdir -p ~/.config/nix
 cp ./nix.conf ~/.config/nix
-cp ./flake.nix ~/
 
 # run the rest in a subshell with nix sourced
 bash -c '
 source ~/.nix-profile/etc/profile.d/nix.sh
 
-nix-channel --add https://github.com/nix-community/nixGL/archive/main.tar.gz nixgl && nix-channel --update
-nix-env -iA nixgl.auto.nixGLDefault
-
 nix flake update
-nix build
-
-nix run home-manager/master -- init
-
-rm ~/.config/home-manager/home.nix
-ln -sf "$(pwd)/home.nix" ~/.config/home-manager/
-
-nix run home-manager -- switch --impure
+nix-shell --run "home-manager switch --impure --flake .; exit"
 
 # Reload environment to see newly installed programs
 source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
