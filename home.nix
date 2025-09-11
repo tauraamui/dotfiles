@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-
+{ config, pkgs, lib, nixgl, ... }:
 let
   fingerprintFile = "${config.home.homeDirectory}/.config/nixos/gpg-fingerprint";
 
@@ -105,8 +104,8 @@ in
     '';
   };
 
-  # nixGL.packages = import <nixgl> { inherit pkgs; };
-  # nixGL.defaultWrapper = "mesa";
+  nixGL.packages = nixgl.packages;
+  nixGL.defaultWrapper = "mesa";
 
   home.packages = [
     pkgs.lazygit
@@ -195,12 +194,12 @@ in
 
   programs.ghostty = {
     enable = true;
-    # package = config.lib.nixGL.wrap pkgs.ghostty;
+    package = config.lib.nixGL.wrap pkgs.ghostty;
   };
 
   programs.wezterm = {
     enable = true;
-    # package = config.lib.nixGL.wrap pkgs.wezterm;
+    package = config.lib.nixGL.wrap pkgs.wezterm;
   };
 
   programs.starship = {
@@ -358,8 +357,8 @@ in
     extraConfig = {
       url = {
         "ssh://git@github.com/" = {
-	  insteadOf = "https://github.com/";
-	};
+          insteadOf = "https://github.com/";
+        };
       };
     };
   };
