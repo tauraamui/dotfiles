@@ -8,7 +8,10 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixgl.url = "github:nix-community/nixGL";
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, nixgl, ... }:
@@ -28,6 +31,7 @@
       pkgs = pkgs;
 
       extraSpecialArgs = {
+        nixgl = nixgl;
         gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
           pkgs = pkgs;
         };
