@@ -7,8 +7,10 @@ mkdir -p ~/.config/nix
 cp ./nix.conf ~/.config/nix
 
 # run the rest in a subshell with nix sourced
+bash -c '
 source ~/.nix-profile/etc/profile.d/nix.sh
 
+nix flake update
 nix-shell --run "home-manager switch --impure --flake .; exit"
 
 # Reload environment to see newly installed programs
@@ -22,3 +24,4 @@ fi
 chsh -s "$FISH_PATH"
 
 gh auth login
+'
