@@ -1,5 +1,4 @@
-{ config, pkgs, lib, ... }:
-
+{ config, pkgs, lib, nixgl, ... }:
 let
   fingerprintFile = "${config.home.homeDirectory}/.config/nixos/gpg-fingerprint";
 
@@ -105,7 +104,7 @@ in
     '';
   };
 
-  nixGL.packages = import <nixgl> { inherit pkgs; };
+  nixGL.packages = nixgl.packages;
   nixGL.defaultWrapper = "mesa";
 
   home.packages = [
@@ -140,7 +139,7 @@ in
   programs.ripgrep.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
-  programs.obsidian.enable = true;
+  # programs.obsidian.enable = true;
 
   programs.tmux = {
     enable = true;
@@ -358,8 +357,8 @@ in
     extraConfig = {
       url = {
         "ssh://git@github.com/" = {
-	  insteadOf = "https://github.com/";
-	};
+          insteadOf = "https://github.com/";
+        };
       };
     };
   };

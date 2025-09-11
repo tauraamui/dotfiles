@@ -2,18 +2,24 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixgl, ... }:
   let
     pkgs = import nixpkgs {
       system = "x86_64-linux";
       config.allowUnfree = true;
+      overlays = [ nixgl.overlay ];
     };
   in {
 
@@ -25,6 +31,7 @@
       pkgs = pkgs;
 
       extraSpecialArgs = {
+        nixgl = nixgl;
         gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
           pkgs = pkgs;
         };
