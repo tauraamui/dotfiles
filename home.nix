@@ -105,8 +105,8 @@ in
     '';
   };
 
-  nixGL.packages = import <nixgl> { inherit pkgs; };
-  nixGL.defaultWrapper = "mesa";
+  # nixGL.packages = import <nixgl> { inherit pkgs; };
+  # nixGL.defaultWrapper = "mesa";
 
   home.packages = [
     pkgs.lazygit
@@ -195,12 +195,12 @@ in
 
   programs.ghostty = {
     enable = true;
-    package = config.lib.nixGL.wrap pkgs.ghostty;
+    # package = config.lib.nixGL.wrap pkgs.ghostty;
   };
 
   programs.wezterm = {
     enable = true;
-    package = config.lib.nixGL.wrap pkgs.wezterm;
+    # package = config.lib.nixGL.wrap pkgs.wezterm;
   };
 
   programs.starship = {
