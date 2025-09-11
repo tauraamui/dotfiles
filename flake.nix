@@ -8,13 +8,15 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixgl.url = "github:nix-community/nixGL";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixgl, ... }:
   let
     pkgs = import nixpkgs {
       system = "x86_64-linux";
       config.allowUnfree = true;
+      overlays = [ nixgl.overlay ];
     };
   in {
 
