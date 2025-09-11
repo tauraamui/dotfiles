@@ -140,7 +140,7 @@ in
   programs.ripgrep.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
-  programs.obsidian.enable = true;
+  # programs.obsidian.enable = true;
 
   programs.tmux = {
     enable = true;
