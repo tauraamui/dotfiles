@@ -14,13 +14,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixgl, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixgl, ... }:
   let
+    system = "x86_64-linux";
     pkgs = import nixpkgs {
-      system = "x86_64-linux";
       config.allowUnfree = true;
       overlays = [ nixgl.overlay ];
     };
+    pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
   in {
 
     packages.x86_64-linux.hello = pkgs.hello;
@@ -28,10 +29,11 @@
     packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
 
     homeConfigurations."tauraamui" = home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgs;
+      inherit pkgs;
 
       extraSpecialArgs = {
         nixgl = nixgl;
+        pkgs-unstable = pkgs-unstable;
         gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
           pkgs = pkgs;
         };

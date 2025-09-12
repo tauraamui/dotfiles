@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nixgl, ... }:
+{ config, pkgs, pkgs-unstable, lib, nixgl, ... }:
 let
   fingerprintFile = "${config.home.homeDirectory}/.config/nixos/gpg-fingerprint";
 
@@ -114,7 +114,7 @@ in
     pkgs.pinentry-curses
     pkgs.gawk
     pkgs.git
-    pkgs.vlang
+    pkgs-unstable.vlang
     pkgs.gitAndTools.gh
   ];
 
