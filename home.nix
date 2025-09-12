@@ -135,11 +135,20 @@ in
   '';
 
   programs.home-manager.enable = true;
-  programs.neovim.enable = true;
   programs.ripgrep.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
   # programs.obsidian.enable = true;
+
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.nvimPlugins; [
+      telescope
+      nvim-lspconfig
+      plenary
+      telescope-file-browser
+    ];
+  };
 
   programs.tmux = {
     enable = true;

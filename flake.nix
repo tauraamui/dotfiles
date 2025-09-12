@@ -12,14 +12,18 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neovim-plugins = {
+      url = "github:tauraamui/neovim-plugins-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixgl, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixgl, neovim-plugins, ... }:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       config.allowUnfree = true;
-      overlays = [ nixgl.overlay ];
+      overlays = [ nixgl.overlay neovim-plugins.overlays.default ];
     };
     pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
   in {
