@@ -142,6 +142,66 @@ in
 
   programs.neovim = {
     enable = true;
+    extraLuaConfig = ''
+      local globals = {
+        mapleader = ';',
+	tmux_navigator_no_mappings = 1,
+      }
+      for k, v in pairs(globals) do
+	vim.g[k] = v
+      end
+
+      local options = {
+	ma = true,
+	mouse = "a",
+	cursorline = true,
+	tabstop = 4,
+	shiftwidth = 4,
+	softtabstop = 4,
+	expandtab = true,
+	autoread = true,
+	nu = true,
+	foldlevelstart = 99,
+	scrolloff = 7,
+	backup = false,
+	writebackup = false,
+	swapfile = false,
+	clipboard = "unnamedplus",
+	ignorecase = true,
+	smartcase = true,
+	termguicolors = true,
+      }
+      for k, v in pairs(options) do
+        vim.opt[k] = v
+      end
+
+
+      # file in focus show relative line nums, when not show non-relative
+      local augroup = vim.api.nvim_create_augroup("numbertoggle", {})
+
+      vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
+         pattern = "*",
+         group = augroup,
+         callback = function()
+            if vim.o.nu and vim.api.nvim_get_mode().mode ~= "i" then
+               vim.opt.relativenumber = true
+            end
+         end,
+      })
+
+      vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
+         pattern = "*",
+         group = augroup,
+         callback = function()
+            if vim.o.nu then
+               vim.opt.relativenumber = false
+               vim.cmd "redraw"
+            end
+         end,
+      })
+
+      vim.cmd('set nowrap')
+    '';
     plugins = with pkgs.nvimPlugins; [
       telescope
       nvim-lspconfig
