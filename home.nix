@@ -26,6 +26,7 @@
     pkgs.pinentry-curses
     pkgs.gawk
     pkgs.git
+    pkgs.wget
     pkgs-unstable.vlang
     pkgs-unstable.go
     pkgs.gitAndTools.gh
@@ -78,6 +79,21 @@
         vim.opt[k] = v
       end
 
+      -- theme
+      require("nightfox").setup({
+        groups = {
+            carbonfox = {
+               String         = { fg = "#57d7d9" },
+               Identifier     = { fg = "#f55da9" }, -- (preferred) any variable name
+               Function       = { fg = "#ff7eb6" }, -- function name (also: methods for classes)
+               Operator       = { link = "Function" }, -- "sizeof", "+", "*", etc.
+               Keyword        = { link = "Function" }, -- any other keyword
+               Exception      = { link = "Function" }, -- try, catch, throw
+               Type           = { fg = "#ffffff" }, -- (preferred) int, long, char, etc.
+            }
+        }
+      })
+      vim.cmd.colorscheme "carbonfox"
 
       -- file in focus show relative line nums, when not show non-relative
       local augroup = vim.api.nvim_create_augroup("numbertoggle", {})
@@ -186,6 +202,8 @@
       plenary
       telescope-file-browser
       vim-tmux-navigator
+      nightfox-theme
+      nvim-autopairs
     ];
   };
 
