@@ -336,6 +336,8 @@ in
       # enable full 256 colour support
       set -ga terminal-overrides ',*256color*:smcup@:rmcup@,xterm*:Tc'
       set -g status-position top
+
+      set -g default-shell "~/.nix-profile/bin/fish"
     '';
   };
 
