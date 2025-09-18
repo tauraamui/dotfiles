@@ -461,6 +461,7 @@
 
     # Optional: Add shell aliases
     shellAliases = {
+      gc = "git checkout";
       ll = "ls -la";
       la = "ls -la";
       l = "ls -l";
