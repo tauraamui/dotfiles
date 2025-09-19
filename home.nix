@@ -1,4 +1,39 @@
 { config, pkgs, pkgs-unstable, lib, nixgl, ... }:
+let
+  crush = pkgs-unstable.buildGoModule rec {
+    pname = "crush";
+    version = "0.9.1";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "charmbracelet";
+      repo = "crush";
+      rev = "v${version}";
+      sha256 = "sha256-5L1O/xJQPSKr5XF2kJn8Nb44WJBOOshjZW6Dl529/ls=";
+    };
+
+    # lib.fakeHash to derive correct hash to use
+    vendorHash = "sha256-ktF3kIr143uPwiEbgafladZRqIsmG6jI2BeumGSu82U=";
+    # crush attempts to download provider data on build/test, so prevent the tests
+    # from failing due to being able to resolve this data
+    doCheck = false;
+  };
+
+  goimports = pkgs-unstable.buildGoModule rec {
+    pname = "goimports";
+    version = "latest";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "golang";
+      repo = "tools";
+      rev = "master";
+      sha256 = "sha256-ohMgL3OW8naE+bUhnneDiuiVv1Wr6wq8v+igsywPFF0=";
+    };
+
+    vendorHash = "sha256-eC/cHoheUkEwzV01M98IcjwRdDYu4Sjxo0zvYy6lsDQ=";
+    doCheck = false;
+    subPackages = [ "cmd/goimports" ];
+  };
+in
 {
   home.username = "tauraamui";
   home.homeDirectory = "/home/tauraamui";
@@ -30,6 +65,9 @@
     pkgs-unstable.vlang
     pkgs-unstable.go
     pkgs.gitAndTools.gh
+    # go tools + packages
+    crush
+    goimports
   ];
 
   home.file = { };
