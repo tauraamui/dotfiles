@@ -62,6 +62,7 @@ in
     pkgs.gawk
     pkgs.git
     pkgs.wget
+    pkgs.xdotool
     pkgs-unstable.vlang
     pkgs-unstable.go
     pkgs.gitAndTools.gh
