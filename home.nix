@@ -33,6 +33,21 @@ let
     doCheck = false;
     subPackages = [ "cmd/goimports" ];
   };
+
+  scc = pkgs-unstable.buildGoModule rec {
+    pname = "scc";
+    version = "latest";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "boyter";
+      repo = "scc";
+      rev = "master";
+      sha256 = "sha256-ZdCkZHidRbWk66My2C5tzwS1vx9R2DW5kQ134pcPsP8=";
+    };
+
+    vendorHash = null;
+    doCheck = false;
+  };
 in
 {
   home.username = "tauraamui";
@@ -69,6 +84,7 @@ in
     # go tools + packages
     crush
     goimports
+    scc
   ];
 
   home.file = { };
