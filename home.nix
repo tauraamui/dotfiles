@@ -110,7 +110,16 @@ in
       vim-tmux-navigator
       nightfox-theme
       nvim-autopairs
+      pkgs.vimPlugins.lazy-lsp-nvim
     ];
+
+    extraConfig = ''
+        lua << EOF
+        require('lazy-lsp').setup {
+            ...
+        }
+        EOF
+    '';
   };
 
   programs.tmux = {

@@ -76,6 +76,9 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
 
 vim.cmd('set nowrap')
 
+-- nvim lsps
+vim.lsp.enable('gopls')
+
 -- nvim tree setup
 
 require('nvim-tree').setup()
