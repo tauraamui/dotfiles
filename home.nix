@@ -115,9 +115,7 @@ in
 
     extraConfig = ''
         lua << EOF
-        require('lazy-lsp').setup {
-            ...
-        }
+        require('lazy-lsp').setup {}
         EOF
     '';
   };
