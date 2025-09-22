@@ -27,6 +27,7 @@ local options = {
     ignorecase = true,
     smartcase = true,
     termguicolors = true,
+    completeopt = "noinsert,fuzzy,menu,popup",
 }
 
 for k, v in pairs(options) do
