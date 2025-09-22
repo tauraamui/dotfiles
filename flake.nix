@@ -36,6 +36,7 @@
       inherit pkgs;
 
       extraSpecialArgs = {
+        inherit self;
         nixgl = nixgl;
         pkgs-unstable = pkgs-unstable;
         gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
