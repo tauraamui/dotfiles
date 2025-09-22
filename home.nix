@@ -134,36 +134,7 @@ in
         '';
       }
     ];
-    extraConfig = ''
-      # smart pane switching with awareness of Vim splits.
-      # See: https://github.com/christoomey/vim-tmux-navigator
-      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'"
-      bind-key 'h' if-shell "$is_vim" 'send-keys C-w h'  'select-pane -L'
-      bind-key 'j' if-shell "$is_vim" 'send-keys C-w j'  'select-pane -D'
-      bind-key 'k' if-shell "$is_vim" 'send-keys C-w k'  'select-pane -U'
-      bind-key 'l' if-shell "$is_vim" 'send-keys C-w l'  'select-pane -R'
-      tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-      if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
-          "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
-      if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
-          "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
-
-      # custom keybinds emulating vim like visual select and yank mode
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
-      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
-
-      # open split panes within same PWD
-      bind '"' split-window -v -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-
-      # enable full 256 colour support
-      set -ga terminal-overrides ',*256color*:smcup@:rmcup@,xterm*:Tc'
-      set -g status-position top
-
-      set -g default-shell "~/.nix-profile/bin/fish"
-    '';
+    extraConfig = ''${builtins.readFile "${self.outPath}/tmux/tmux.conf"}'';
   };
 
   programs.ghostty = {
