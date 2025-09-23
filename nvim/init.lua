@@ -8,6 +8,8 @@ for k, v in pairs(globals) do
     vim.g[k] = v
 end
 
+vim.cmd('set nowrap')
+
 local options = {
     ma = true,
     mouse = "a",
@@ -75,8 +77,6 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
     end,
 })
 
-vim.cmd('set nowrap')
-
 -- nvim lsps
 vim.lsp.enable('gopls')
 
@@ -87,6 +87,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.lsp.completion.enable(true, client.id, args.buf, {autotrigger = true})
     end
 })
+
+-- want autocomplete to stay open even when backspacing
+vim.api.nvim_create_autocmd("TextChangedI", {
+    callback = function()
+        local col = vim.fn.col('.')
+        local line = vim.fn.getline('.')
+        local prev_char = line:sub(col-1, col-1)
+
+        if vim.fn.pumvisible() == 0 and prev_char:match('%w') then
+            vim.lsp.completion.get()
+        elseif vim.fn.pumvisible() == 1 and prev_char == '' then
+            -- Keep menu open after backspace
+            vim.lsp.completion.get()
+        end
+    end
+})
+
+-- Make Enter select completion item (like Ctrl-y) when popup menu is visible
+imap { "<CR>", "pumvisible() ? '<C-y>' : '<CR>'", expr = true }
 
 -- nvim tree setup
 
