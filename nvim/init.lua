@@ -52,6 +52,21 @@ require("nightfox").setup({
 })
 vim.cmd.colorscheme "carbonfox"
 
+-- enables hover/virtual dialogs showing lines current errors
+vim.diagnostic.config({
+    virtual_text = false,
+    virtual_lines = { current_line = true },
+})
+
+-- git signs
+require('gitsigns').setup()
+
+-- terminal toggle
+require('toggleterm').setup()
+
+-- autopairs
+require('nvim-autopairs').setup()
+
 -- file in focus show relative line nums, when not show non-relative
 local augroup = vim.api.nvim_create_augroup("numbertoggle", {})
 
@@ -77,9 +92,6 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
     end,
 })
 
--- nvim lsps
-vim.lsp.enable('gopls')
-
 -- autocomplete
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -104,11 +116,7 @@ vim.api.nvim_create_autocmd("TextChangedI", {
     end
 })
 
--- Make Enter select completion item (like Ctrl-y) when popup menu is visible
-imap { "<CR>", "pumvisible() ? '<C-y>' : '<CR>'", expr = true }
-
 -- nvim tree setup
-
 require('nvim-tree').setup()
 
 local function open_nvim_tree(data)
@@ -157,6 +165,9 @@ imap = function(tbl)
     tbl['mode'] = 'i'
     keymap(tbl)
 end
+
+-- Make Enter select completion item (like Ctrl-y) when popup menu is visible
+imap { "<CR>", "pumvisible() ? '<C-y>' : '<CR>'", expr = true }
 
 -- tmux-navigator keybinds
 nmap { "<C-w>h", "<cmd>TmuxNavigateLeft<cr>" }

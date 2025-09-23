@@ -101,16 +101,21 @@ in
     enable = true;
     extraLuaConfig = ''${builtins.readFile "${self.outPath}/nvim/init.lua"}'';
     plugins = with pkgs.nvimPlugins; [
-      telescope
+      gitsigns
+      nightfox-theme
+      nvim-autopairs
       nvim-lspconfig
       nvim-treesitter
       nvim-tree
+      nvim-web-devicons
       plenary
-      telescope-file-browser
-      vim-tmux-navigator
-      nightfox-theme
-      nvim-autopairs
       pkgs.vimPlugins.lazy-lsp-nvim
+      startup
+      telescope
+      telescope-file-browser
+      toggleterm
+      trouble
+      vim-tmux-navigator
     ];
 
     extraConfig = ''
