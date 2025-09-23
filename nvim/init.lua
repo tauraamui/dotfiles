@@ -55,7 +55,7 @@ vim.cmd.colorscheme "carbonfox"
 -- enables hover/virtual dialogs showing lines current errors
 vim.diagnostic.config({
     virtual_text = false,
-    virtual_lines = { current_line = true },
+    virtual_lines = true,
 })
 
 -- git signs
