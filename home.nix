@@ -96,6 +96,7 @@ in
     pkgs-unstable.vlang
     pkgs-unstable.go
     pkgs.gitAndTools.gh
+    pkgs.httpie
     # go tools + packages
     crush
     goimports
