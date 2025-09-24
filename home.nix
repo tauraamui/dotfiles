@@ -18,7 +18,7 @@ let
     doCheck = false;
   };
 
-  goimports = pkgs-unstable.buildGoModule rec {
+  goimports = pkgs-unstable.buildGoModule {
     pname = "goimports";
     version = "latest";
 
@@ -34,7 +34,7 @@ let
     subPackages = [ "cmd/goimports" ];
   };
 
-  scc = pkgs-unstable.buildGoModule rec {
+  scc = pkgs-unstable.buildGoModule {
     pname = "scc";
     version = "latest";
 
@@ -47,6 +47,19 @@ let
 
     vendorHash = null;
     doCheck = false;
+  };
+
+  gotestsum = pkgs-unstable.buildGoModule {
+    src = pkgs.fetchFromGitHub {
+      owner = "gotestyourself";
+      repo = "gotestsum";
+      rev = "main";
+      sha256 = lib.fakeHash;
+    };
+
+    vendorHash = lib.fakeHash;
+    doCheck = false;
+    subPackages = [ "cmd/goimports" ];
   };
 in
 {
@@ -84,6 +97,7 @@ in
     # go tools + packages
     crush
     goimports
+    gotestsum
     scc
   ];
 
@@ -368,6 +382,8 @@ in
 
     # Optional: Add shell aliases
     shellAliases = {
+      got = "go test -count=1 ./...";
+      gos = "gotestsum ./...";
       gc = "git checkout";
       gb = "git branch";
       ll = "ls -la";
