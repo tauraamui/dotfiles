@@ -393,6 +393,7 @@ in
       gotx = "go test -count=1 ./...";
       gc = "git checkout";
       gb = "git branch";
+      gp = "git remote prune origin";
       ll = "ls -la";
       la = "ls -la";
       l = "ls -l";
