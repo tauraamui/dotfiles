@@ -384,10 +384,13 @@ in
 
     # Optional: Add shell aliases
     shellAliases = {
-      got = "go test -count=1 ./...";
-      gos = "gotestsum ./...";
-      goi = "goimports -w .";
+      gob = "go build .";
       gof = "go fmt -x ./...";
+      goi = "goimports -w .";
+      gor = "go run ./...";
+      gos = "gotestsum ./...";
+      got = "go test ./...";
+      gotx = "go test -count=1 ./...";
       gc = "git checkout";
       gb = "git branch";
       ll = "ls -la";
