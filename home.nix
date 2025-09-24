@@ -50,16 +50,18 @@ let
   };
 
   gotestsum = pkgs-unstable.buildGoModule {
+    pname = "gotestsum";
+    version = "latest";
+
     src = pkgs.fetchFromGitHub {
       owner = "gotestyourself";
       repo = "gotestsum";
       rev = "main";
-      sha256 = lib.fakeHash;
+      sha256 = "sha256-bChELLxindXJ2lFfzOu3x2ZXDudAheo2n9S5x87w+Mc=";
     };
 
-    vendorHash = lib.fakeHash;
+    vendorHash = "sha256-25AhWZiXhniZ6Gmw4J7psE/FfbS1j7Ncte0s43Xo98o=";
     doCheck = false;
-    subPackages = [ "cmd/goimports" ];
   };
 in
 {
@@ -384,6 +386,8 @@ in
     shellAliases = {
       got = "go test -count=1 ./...";
       gos = "gotestsum ./...";
+      goi = "goimports -w .";
+      gof = "go fmt -x ./...";
       gc = "git checkout";
       gb = "git branch";
       ll = "ls -la";
