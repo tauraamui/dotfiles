@@ -168,6 +168,7 @@ end
 
 -- Make Enter select completion item (like Ctrl-y) when popup menu is visible
 imap { "<CR>", "pumvisible() ? '<C-y>' : '<CR>'", expr = true }
+imap { "<tab>", "pumvisible() ? '<C-y>' : '<tab>'", expr = true }
 
 -- tmux-navigator keybinds
 nmap { "<C-w>h", "<cmd>TmuxNavigateLeft<cr>" }
