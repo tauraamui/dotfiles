@@ -392,6 +392,7 @@ in
       gos = "gotestsum ./...";
       got = "go test ./...";
       gotx = "go test -count=1 ./...";
+      vt = "make.vsh test";
       gc = "git checkout";
       gb = "git branch";
       gp = "git remote prune origin";
