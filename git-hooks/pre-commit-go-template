@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Pre-commit hook template for Go projects
+# Copy this to your Go project's .git/hooks/pre-commit and make it executable
+
+set -e
+
+# Check if this is a Go project (has go.mod)
+if [[ ! -f "go.mod" ]]; then
+    exit 0
+fi
+
+# Get list of staged Go files
+staged_go_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.go$' || true)
+
+if [[ -z "$staged_go_files" ]]; then
+    echo "No Go files staged, skipping golangci-lint"
+    exit 0
+fi
+
+echo "Running golangci-lint on staged Go files..."
+
+# Run golangci-lint with --fix on the entire project
+if ! golangci-lint run --fix; then
+    echo ""
+    echo "❌ golangci-lint found issues. Please fix them before committing."
+    echo "   You can run 'golangci-lint run --fix' manually to auto-fix some issues."
+    exit 1
+fi
+
+# Re-add any files that were modified by --fix
+for file in $staged_go_files; do
+    if [[ -f "$file" ]]; then
+        git add "$file"
+    fi
+done
+
+echo "✅ golangci-lint passed"
