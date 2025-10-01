@@ -225,3 +225,6 @@ nmap{ "<leader>gb", "<cmd>Gitsigns blame_line<cr>" }
 
 -- nvim-tree keybind
 nmap{ "<leader>tt", "<cmd>NvimTreeToggle<cr>" }
+
+-- golangci-lint keybind (manual run)
+nmap{ "<leader>gl", "<cmd>lua if vim.bo.filetype == 'go' then vim.cmd('!golangci-lint run --fix') else print('golangci-lint: Not a Go file') end<cr>" }
