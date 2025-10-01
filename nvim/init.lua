@@ -58,6 +58,13 @@ vim.diagnostic.config({
     virtual_lines = true,
 })
 
+-- test coverage
+local goc = require('nvim-goc')
+goc.setup()
+
+vim.api.nvim_set_hl(0, 'GocCovered', {link='String'})
+vim.api.nvim_set_hl(0, 'GocUncovered', {link='Error'})
+
 -- git signs
 require('gitsigns').setup()
 
@@ -222,6 +229,11 @@ nmap{ "<leader>fv", "<cmd>Telescope file_browser<cr>" }
 nmap{ "<leader>fr", "<cmd>Telescope lsp_references<cr>" }
 nmap{ "<leader>ft", "<cmd>TodoTelescope<cr>" }
 nmap{ "<leader>gb", "<cmd>Gitsigns blame_line<cr>" }
+
+-- go test coverage
+vim.keymap.set('n', '<leader>tcf', goc.Coverage, {silent=true})
+vim.keymap.set('n', '<leader>tct', goc.CoverageFunc, {silent=true})
+vim.keymap.set('n', '<leader>tcc', goc.ClearCoverage, {silent=true})
 
 -- nvim-tree keybind
 nmap{ "<leader>tt", "<cmd>NvimTreeToggle<cr>" }

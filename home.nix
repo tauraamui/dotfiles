@@ -121,6 +121,7 @@ in
       gitsigns
       nightfox-theme
       nvim-autopairs
+      nvim-goc
       nvim-lspconfig
       nvim-treesitter
       nvim-tree
