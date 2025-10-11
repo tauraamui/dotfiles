@@ -63,6 +63,21 @@ let
     vendorHash = "sha256-25AhWZiXhniZ6Gmw4J7psE/FfbS1j7Ncte0s43Xo98o=";
     doCheck = false;
   };
+
+  invoice = pkgs-unstable.buildGoModule {
+    pname = "invoice";
+    version = "latest";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "maaslalani";
+      repo = "invoice";
+      rev = "main";
+      sha256 = "sha256-nHTwNdc6IvKRYZGeU3PHDb++brgs0YR34GgQFue3+FE=";
+    };
+
+    vendorHash = "sha256-mLn9hN7hd3MPYx0STiwCL8pTTYtDlycVkSLUEq8NZOE=";
+    doCheck = false;
+  };
 in
 {
   home.username = "tauraamui";
@@ -102,6 +117,7 @@ in
     goimports
     gotestsum
     scc
+    invoice
   ];
 
   home.file = { };
@@ -370,6 +386,7 @@ in
     interactiveShellInit = ''
       # Custom Fish configuration goes here
       set -g fish_greeting ""  # Disable greeting message
+      set -g LD_LIBRARY_PATH "/usr/lib"
       fish_add_path ~/.local/bin
     '';
 
