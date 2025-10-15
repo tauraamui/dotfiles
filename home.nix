@@ -128,6 +128,7 @@ in
   programs.ripgrep.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
+  programs.gh-dash.enable = true; # bit confused how this works since `gh` itself is installed a package not a program but oki 
   # programs.obsidian.enable = true;
 
   programs.neovim = {
