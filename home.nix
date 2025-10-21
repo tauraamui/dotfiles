@@ -110,6 +110,7 @@ in
     pkgs.xdotool
     pkgs-unstable.vlang
     pkgs-unstable.go
+    pkgs-unstable.svu
     pkgs.gitAndTools.gh
     pkgs.httpie
     pkgs.go-task
@@ -129,7 +130,7 @@ in
   programs.ripgrep.enable = true;
   programs.rio.enable = true;
   programs.kitty.enable = true;
-  programs.gh-dash.enable = true; # bit confused how this works since `gh` itself is installed a package not a program but oki 
+  programs.gh-dash.enable = true; # bit confused how this works since `gh` itself is installed a package not a program but oki
   # programs.obsidian.enable = true;
 
   programs.neovim = {
