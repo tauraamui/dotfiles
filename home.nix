@@ -112,6 +112,7 @@ in
     pkgs-unstable.go
     pkgs.gitAndTools.gh
     pkgs.httpie
+    pkgs.go-task
     # go tools + packages
     crush
     goimports
