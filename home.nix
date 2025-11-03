@@ -122,7 +122,9 @@ in
     invoice
   ];
 
-  home.file = { };
+  home.file = {
+    ".XCompose".source = ./compose-mappings;
+  };
 
   home.sessionVariables = { };
 
@@ -189,11 +191,6 @@ in
   programs.ghostty = {
     enable = true;
     package = config.lib.nixGL.wrap pkgs.ghostty;
-  };
-
-  programs.wezterm = {
-    enable = true;
-    package = config.lib.nixGL.wrap pkgs.wezterm;
   };
 
   programs.starship = {
