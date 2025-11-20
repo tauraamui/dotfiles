@@ -26,10 +26,10 @@ let
       owner = "golang";
       repo = "tools";
       rev = "master";
-      sha256 = "sha256-ohMgL3OW8naE+bUhnneDiuiVv1Wr6wq8v+igsywPFF0=";
+      sha256 = "sha256-Ij6eXcCVzb5HWdH2IoN4/zMHHAmCUNu7S4+OmBRFGZ4=";
     };
 
-    vendorHash = "sha256-eC/cHoheUkEwzV01M98IcjwRdDYu4Sjxo0zvYy6lsDQ=";
+    vendorHash = "sha256-FVtHrFgxgDBAfU4x4+zANNhGa3pfsh3XgEQaQYdV1Bs=";
     doCheck = false;
     subPackages = [ "cmd/goimports" ];
   };
@@ -42,11 +42,27 @@ let
       owner = "boyter";
       repo = "scc";
       rev = "master";
-      sha256 = "sha256-ZdCkZHidRbWk66My2C5tzwS1vx9R2DW5kQ134pcPsP8=";
+      sha256 = "sha256-DzQYgvr4kiW/dUBwWsrkNRdjKI2tWLBSjivVNFn1k7g=";
     };
 
     vendorHash = null;
     doCheck = false;
+  };
+
+  sqlc = pkgs-unstable.buildGoModule {
+    pname = "sqlc";
+    version = "latest";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "sqlc-dev";
+      repo = "sqlc";
+      rev = "master";
+      sha256 = "sha256-5PIaSqEIFX0cwBdJlZyh4E0gA2BDeGIfXrGdgyxKbTg=";
+    };
+
+    vendorHash = "sha256-69kg3qkvEWyCAzjaCSr3a73MNonub9sZTYyGaCW+UTI=";
+    doCheck = false;
+    subPackages = [ "cmd/sqlc" ];
   };
 
   gotestsum = pkgs-unstable.buildGoModule {
@@ -118,6 +134,7 @@ in
     crush
     goimports
     gotestsum
+    sqlc
     scc
     invoice
   ];
