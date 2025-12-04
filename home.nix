@@ -144,6 +144,7 @@ in
     ".config/hypr/bindings.conf".source = ./hypr/bindings.conf;
     ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
     ".config/hypr/looknfeel.conf".source = ./hypr/looknfeel.conf;
+    ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
   };
 
   home.sessionVariables = { };

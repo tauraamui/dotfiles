@@ -1,5 +1,7 @@
 ## How to use
 
+`home-manager switch -b backup --impure --flake .`
+
 This collection of dot files is managed by [Chezmoi](https://www.chezmoi.io/). Follow the instructions on the homepage if you would like to download and use them. Be aware that this is obviously my own custom setup. Additionally, most of the .tmpl files will generate different output depending on the hostname of the machine you're using. Some files will just not be complete nor working if you don't have any of the matching hostnames which is likely the case. YMMV.
 
 ## Neovim showcase
