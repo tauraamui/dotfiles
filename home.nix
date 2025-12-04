@@ -26,7 +26,7 @@ let
       owner = "golang";
       repo = "tools";
       rev = "master";
-      sha256 = "sha256-Ij6eXcCVzb5HWdH2IoN4/zMHHAmCUNu7S4+OmBRFGZ4=";
+      sha256 = "sha256-094vk5rknJw68pZ8ZsGvxdVfkDIr/QG61xKAYsdW0vA=";
     };
 
     vendorHash = "sha256-FVtHrFgxgDBAfU4x4+zANNhGa3pfsh3XgEQaQYdV1Bs=";
@@ -42,7 +42,7 @@ let
       owner = "boyter";
       repo = "scc";
       rev = "master";
-      sha256 = "sha256-DzQYgvr4kiW/dUBwWsrkNRdjKI2tWLBSjivVNFn1k7g=";
+      sha256 = "sha256-NsJ6WtqkXAXUAJEKoAhsuR+xSEzTEsDzEAqBTrpRsCA=";
     };
 
     vendorHash = null;
@@ -57,10 +57,10 @@ let
       owner = "sqlc-dev";
       repo = "sqlc";
       rev = "master";
-      sha256 = "sha256-5PIaSqEIFX0cwBdJlZyh4E0gA2BDeGIfXrGdgyxKbTg=";
+      sha256 = "sha256-AfdUMu/dshw3G+oNoQ4BxFNBzIsKGD0a3wn6pfisOqk=";
     };
 
-    vendorHash = "sha256-69kg3qkvEWyCAzjaCSr3a73MNonub9sZTYyGaCW+UTI=";
+    vendorHash = "sha256-fzEyAIrdQfhtglHk/AnVvb/iahJmJeidwrBEwDZLyME=";
     doCheck = false;
     subPackages = [ "cmd/sqlc" ];
   };
