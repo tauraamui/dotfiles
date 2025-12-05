@@ -18,6 +18,21 @@ let
     doCheck = false;
   };
 
+  gofumpt = pkgs-unstable.buildGoModule {
+    pname = "gofumpt";
+    version = "latest";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "mvdan";
+      repo = "gofumpt";
+      rev = "master";
+      sha256 = "sha256-ngqg8YJHqW08hvZp+E+RLLjGArOZJov7/xKCMAWFI1E=";
+    };
+
+    vendorHash = "sha256-qCXpFxTZIhDDvvwytvftBnMwOHopO6/FkBWcLZhBDp8=";
+    doCheck = false;
+  };
+
   goimports = pkgs-unstable.buildGoModule {
     pname = "goimports";
     version = "latest";
@@ -134,6 +149,7 @@ in
     crush
     goimports
     gotestsum
+    gofumpt
     sqlc
     scc
     invoice
