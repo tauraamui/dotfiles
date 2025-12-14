@@ -9,19 +9,19 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 log() {
-  echo -e "${GREEN}[INFO]${NC} $1"
+  echo -e "${GREEN}[INFO]${NC} $1" >&2
 }
 
 warn() {
-  echo -e "${YELLOW}[WARN]${NC} $1"
+  echo -e "${YELLOW}[WARN]${NC} $1" >&2
 }
 
 error() {
-  echo -e "${RED}[ERROR]${NC} $1"
+  echo -e "${RED}[ERROR]${NC} $1" >&2
 }
 
 info() {
-  echo -e "${BLUE}[DETAIL]${NC} $1"
+  echo -e "${BLUE}[DETAIL]${NC} $1" >&2
 }
 
 # Check if we have the required tools
@@ -190,10 +190,13 @@ update_package() {
   # Prefetch to get new source hash
   local new_hash
   new_hash=$(prefetch_github "${repo}" "${latest_rev}")
-  if [ $? -ne 0 ] || [ -z "$new_hash" ]; then
-    error "Could not prefetch ${pkg_name}"
+  local prefetch_exit=$?
+  if [ $prefetch_exit -ne 0 ] || [ -z "$new_hash" ]; then
+    error "Could not prefetch ${pkg_name} (exit: $prefetch_exit, hash: '$new_hash')"
     return 1
   fi
+  
+  info "Successfully prefetched ${pkg_name}, new hash: $new_hash"
   
   # Create backup if not already created
   if [ ! -f "home.nix.backup.$(date +%Y%m%d)*" ]; then
@@ -202,15 +205,51 @@ update_package() {
   
   # Update rev and sha256 in home.nix
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|rev = \"${current_rev}\"|rev = \"${latest_rev}\"|" home.nix
-  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix
+  info "Updated rev for ${pkg_name}"
   
-  # Set vendorHash to fakeHash temporarily (suppress sed warnings if pattern doesn't match)
-  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix 2>/dev/null || true
-  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = null|vendorHash = lib.fakeHash; # Update me|" home.nix 2>/dev/null || true
+  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix
+  info "Updated sha256 for ${pkg_name}"
+  
+  # Try to get the vendorHash automatically via build
+  log "Attempting to build and get correct vendorHash for ${pkg_name}..."
+  
+  # Try to build (this will fail but show the correct vendorHash)
+  local build_output
+  build_output=$(nix build .#homeConfigurations.tauraamui.activationPackage 2>&1 || true)
+  
+  # Extract the vendorHash from the build output
+  local correct_vendor_hash
+  correct_vendor_hash=$(echo "$build_output" | grep -o "got: sha256-[A-Za-z0-9+/=]\+" | sed 's/got: sha256-//' | head -1)
+  
+  if [ -n "$correct_vendor_hash" ]; then
+    # Update the vendorHash with the correct value
+    sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = lib.fakeHash; # Update me|vendorHash = \"sha256-${correct_vendor_hash}\"|" home.nix 2>/dev/null || true
+    
+    # Verify the update worked by checking if it was found
+    if grep -q "vendorHash = \"sha256-${correct_vendor_hash}\"" home.nix; then
+      info "Successfully updated vendorHash for ${pkg_name}: sha256-${correct_vendor_hash}"
+    else
+      # Try alternative sed pattern
+      sed -i "/${pkg_name}.*buildGoModule/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = \"sha256-${correct_vendor_hash}\"|" home.nix 2>/dev/null || true
+      
+      if grep -q "vendorHash = \"sha256-${correct_vendor_hash}\"" home.nix; then
+        info "Successfully updated vendorHash for ${pkg_name}: sha256-${correct_vendor_hash}"
+      else
+        warn "Could not automatically update vendorHash for ${pkg_name} in the file."
+        warn "Please run 'home-manager switch' to get the correct value."
+        warn "Search for 'vendorHash.*${pkg_name}' in the error output."
+      fi
+    fi
+  else
+    # Could not extract vendorHash from build output
+    info "Could not automatically determine vendorHash for ${pkg_name}."
+    info "This may happen if the build fails for other reasons."
+    info "You will need to update it manually by running:"
+    info "  home-manager switch -b backup --impure --flake ."
+    info "Then update the vendorHash value shown in the error output."
+  fi
   
   log "Updated ${pkg_name} revision and source hash"
-  log "Remember to run: home-manager switch -b backup --impure --flake ."
-  log "Then update the vendorHash with the value shown in the error output."
   
   return 0
 }
@@ -264,9 +303,36 @@ update_crush() {
   sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix 2>/dev/null || true
   sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix 2>/dev/null || true
   
+  # Try to get the vendorHash automatically via build
+  log "Attempting to build and get correct vendorHash for crush..."
+  
+  local build_output
+  build_output=$(nix build .#homeConfigurations.tauraamui.activationPackage 2>&1 || true)
+  
+  local correct_vendor_hash
+  correct_vendor_hash=$(echo "$build_output" | grep -o "got: sha256-[A-Za-z0-9+/=]\+" | sed 's/got: sha256-//' | head -1)
+  
+  if [ -n "$correct_vendor_hash" ]; then
+    sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|vendorHash = lib.fakeHash; # Update me|vendorHash = \"sha256-${correct_vendor_hash}\"|" home.nix 2>/dev/null || true
+    
+    if grep -q "vendorHash = \"sha256-${correct_vendor_hash}\"" home.nix; then
+      info "Successfully updated vendorHash for crush: sha256-${correct_vendor_hash}"
+    else
+      sed -i "/crush.*buildGoModule rec/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = \"sha256-${correct_vendor_hash}\"|" home.nix 2>/dev/null || true
+      
+      if grep -q "vendorHash = \"sha256-${correct_vendor_hash}\"" home.nix; then
+        info "Successfully updated vendorHash for crush: sha256-${correct_vendor_hash}"
+      else
+        warn "Could not automatically update vendorHash for crush"
+      fi
+    fi
+  else
+    info "Could not automatically determine vendorHash for crush from build output"
+    info "You will need to update it manually by running:"
+    info "  home-manager switch -b backup --impure --flake ."
+  fi
+  
   log "Updated crush version and source hash"
-  log "Remember to run: home-manager switch -b backup --impure --flake ."
-  log "Then update the vendorHash with the value shown in the error output."
   
   return 0
 }
@@ -337,12 +403,13 @@ if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
   echo "This script will:"
   echo "1. Check for updates to all Go packages in home.nix"
   echo "2. Update rev/tag and source sha256 hashes"
-  echo "3. Set vendorHash to lib.fakeHash (must be updated manually)"
+  echo "3. Attempt to automatically update vendorHash via build"
   echo ""
-  echo "After running this script:"
+  echo "For any packages where vendorHash cannot be determined automatically,"
+  echo "you will need to update it manually by running:"
   echo "  home-manager switch -b backup --impure --flake ."
   echo ""
-  echo "The build will show the correct vendorHash values to use."
+  echo "The build output will show the correct vendorHash values to use."
   echo ""
   echo "Packages tracked:"
   echo "  - charmbracelet/crush (releases)"
