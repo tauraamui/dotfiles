@@ -2,7 +2,7 @@
 let
   crush = pkgs-unstable.buildGoModule rec {
     pname = "crush";
-    version = "0.9.1";
+    version = "0.24.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "charmbracelet";
@@ -12,7 +12,7 @@ let
     };
 
     # lib.fakeHash to derive correct hash to use
-    vendorHash = "sha256-ktF3kIr143uPwiEbgafladZRqIsmG6jI2BeumGSu82U=";
+    vendorHash = lib.fakeHash; # Update me;
     # crush attempts to download provider data on build/test, so prevent the tests
     # from failing due to being able to resolve this data
     doCheck = false;
@@ -25,11 +25,11 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "mvdan";
       repo = "gofumpt";
-      rev = "master";
+      rev = "718975501de6321ddf0a5fd17b4f959d33fa203e";
       sha256 = "sha256-ngqg8YJHqW08hvZp+E+RLLjGArOZJov7/xKCMAWFI1E=";
     };
 
-    vendorHash = "sha256-qCXpFxTZIhDDvvwytvftBnMwOHopO6/FkBWcLZhBDp8=";
+    vendorHash = lib.fakeHash; # Update me;
     doCheck = false;
   };
 
@@ -40,11 +40,11 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "golang";
       repo = "tools";
-      rev = "master";
+      rev = "1f3446a1f9bc9e1f88c289b7ee852d29a1452c10";
       sha256 = "sha256-094vk5rknJw68pZ8ZsGvxdVfkDIr/QG61xKAYsdW0vA=";
     };
 
-    vendorHash = "sha256-FVtHrFgxgDBAfU4x4+zANNhGa3pfsh3XgEQaQYdV1Bs=";
+    vendorHash = lib.fakeHash; # Update me;
     doCheck = false;
     subPackages = [ "cmd/goimports" ];
   };
@@ -56,11 +56,11 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "boyter";
       repo = "scc";
-      rev = "master";
+      rev = "a05061505b9313b62468fd44510f920b07fdff1c";
       sha256 = "sha256-NsJ6WtqkXAXUAJEKoAhsuR+xSEzTEsDzEAqBTrpRsCA=";
     };
 
-    vendorHash = null;
+    vendorHash = lib.fakeHash; # Update me;
     doCheck = false;
   };
 
@@ -71,11 +71,11 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "sqlc-dev";
       repo = "sqlc";
-      rev = "master";
+      rev = "74ecda5fa1cc2bd7e237584ef18e43a14e6d7f81";
       sha256 = "sha256-AfdUMu/dshw3G+oNoQ4BxFNBzIsKGD0a3wn6pfisOqk=";
     };
 
-    vendorHash = "sha256-fzEyAIrdQfhtglHk/AnVvb/iahJmJeidwrBEwDZLyME=";
+    vendorHash = lib.fakeHash; # Update me;
     doCheck = false;
     subPackages = [ "cmd/sqlc" ];
   };
@@ -87,11 +87,11 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "gotestyourself";
       repo = "gotestsum";
-      rev = "main";
+      rev = "06f60b3249917ddd1a04c8e2586116d1a87bc67c";
       sha256 = "sha256-bChELLxindXJ2lFfzOu3x2ZXDudAheo2n9S5x87w+Mc=";
     };
 
-    vendorHash = "sha256-25AhWZiXhniZ6Gmw4J7psE/FfbS1j7Ncte0s43Xo98o=";
+    vendorHash = lib.fakeHash; # Update me;
     doCheck = false;
   };
 
@@ -102,11 +102,11 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "maaslalani";
       repo = "invoice";
-      rev = "main";
+      rev = "0fb2e9d84385c6393ca6925bc6d25a89555b0b2d";
       sha256 = "sha256-nHTwNdc6IvKRYZGeU3PHDb++brgs0YR34GgQFue3+FE=";
     };
 
-    vendorHash = "sha256-mLn9hN7hd3MPYx0STiwCL8pTTYtDlycVkSLUEq8NZOE=";
+    vendorHash = lib.fakeHash; # Update me;
     doCheck = false;
   };
 in

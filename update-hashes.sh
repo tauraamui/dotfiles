@@ -106,15 +106,40 @@ prefetch_github() {
   # repo format is "owner/repo", split them
   local owner="${repo%%/*}"
   local pkg_name="${repo##*/}"
+  local output
+  local exit_code
+  
+  info "Prefetching $owner/$pkg_name at rev $rev..."
   
   if [ -n "${GITHUB_TOKEN:-}" ]; then
     # Use authenticated request for higher rate limits
-    nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" --github-access-token "$GITHUB_TOKEN" 2>/dev/null | \
-      jq -r '.hash' | sed 's/^sha256-//'
+    output=$(nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" --github-access-token "$GITHUB_TOKEN" 2>&1)
+    exit_code=$?
   else
-    nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" 2>/dev/null | \
-      jq -r '.hash' | sed 's/^sha256-//'
+    output=$(nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" 2>&1)
+    exit_code=$?
   fi
+  
+  if [ $exit_code -ne 0 ]; then
+    error "nix-prefetch-github failed with exit code $exit_code"
+    error "Command output: $output"
+    echo ""
+    return 1
+  fi
+  
+  # Extract the hash from the JSON output
+  local hash
+  hash=$(echo "$output" | jq -r '.hash // empty' 2>/dev/null)
+  
+  if [ -z "$hash" ]; then
+    error "Could not extract hash from nix-prefetch-github output"
+    error "Raw output: $output"
+    echo ""
+    return 1
+  fi
+  
+  # Remove sha256- prefix if present
+  echo "$hash" | sed 's/^sha256-//'
 }
 
 # Function to update a package in home.nix
@@ -165,8 +190,7 @@ update_package() {
   # Prefetch to get new source hash
   local new_hash
   new_hash=$(prefetch_github "${repo}" "${latest_rev}")
-  
-  if [ -z "$new_hash" ]; then
+  if [ $? -ne 0 ] || [ -z "$new_hash" ]; then
     error "Could not prefetch ${pkg_name}"
     return 1
   fi
@@ -180,9 +204,9 @@ update_package() {
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|rev = \"${current_rev}\"|rev = \"${latest_rev}\"|" home.nix
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix
   
-  # Set vendorHash to fakeHash temporarily
-  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix
-  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = null|vendorHash = lib.fakeHash; # Update me|" home.nix
+  # Set vendorHash to fakeHash temporarily (suppress sed warnings if pattern doesn't match)
+  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix 2>/dev/null || true
+  sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = null|vendorHash = lib.fakeHash; # Update me|" home.nix 2>/dev/null || true
   
   log "Updated ${pkg_name} revision and source hash"
   log "Remember to run: home-manager switch -b backup --impure --flake ."
@@ -229,17 +253,16 @@ update_crush() {
   # Prefetch
   local new_hash
   new_hash=$(prefetch_github "charmbracelet/crush" "$commit_sha")
-  
-  if [ -z "$new_hash" ]; then
+  if [ $? -ne 0 ] || [ -z "$new_hash" ]; then
     error "Could not prefetch crush"
     return 1
   fi
   
-  # Update
-  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|version = \"${current_version}\"|version = \"${latest_version}\"|" home.nix
-  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|rev = \"v[0-9.]\+\"|rev = \"${latest_tag}\"|" home.nix
-  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix
-  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix
+  # Update (suppress sed warnings if patterns don't match old values)
+  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|version = \"${current_version}\"|version = \"${latest_version}\"|" home.nix 2>/dev/null || true
+  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|rev = \"v[0-9.]\+\"|rev = \"${latest_tag}\"|" home.nix 2>/dev/null || true
+  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix 2>/dev/null || true
+  sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix 2>/dev/null || true
   
   log "Updated crush version and source hash"
   log "Remember to run: home-manager switch -b backup --impure --flake ."
