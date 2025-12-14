@@ -24,6 +24,7 @@
     pkgs = import nixpkgs {
       config.allowUnfree = true;
       overlays = [ nixgl.overlay neovim-plugins.overlays.default ];
+      system = system;
     };
     pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
   in {
