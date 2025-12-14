@@ -43,10 +43,44 @@ check_dependencies() {
   fi
 }
 
+# Function to check GitHub API rate limit
+check_rate_limit() {
+  log "Checking GitHub API rate limit..."
+  local response
+  local remaining
+  
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    response=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/rate_limit)
+  else
+    response=$(curl -s https://api.github.com/rate_limit)
+  fi
+  
+  remaining=$(echo "$response" | jq -r '.rate.remaining // empty')
+  
+  if [ -n "$remaining" ]; then
+    log "API requests remaining: $remaining"
+    if [ "$remaining" -lt 10 ]; then
+      warn "Low on API requests! Consider setting GITHUB_TOKEN environment variable."
+      if [ -z "${GITHUB_TOKEN:-}" ]; then
+        warn "Without GITHUB_TOKEN: 60 requests/hour limit"
+        warn "With GITHUB_TOKEN: 5000 requests/hour limit"
+      fi
+    fi
+  else
+    warn "Could not check rate limit (this is okay)"
+  fi
+}
+
 # Function to get latest release tag from GitHub
 get_latest_release() {
   local repo="$1"
-  curl -s "https://api.github.com/repos/${repo}/releases/latest" | \
+  local auth_header=""
+  
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    auth_header="-H Authorization: token $GITHUB_TOKEN"
+  fi
+  
+  curl -s $auth_header "https://api.github.com/repos/${repo}/releases/latest" | \
     jq -r '.tag_name // empty'
 }
 
@@ -54,7 +88,13 @@ get_latest_release() {
 get_latest_commit() {
   local repo="$1"
   local branch="${2:-main}"
-  curl -s "https://api.github.com/repos/${repo}/commits/${branch}" | \
+  local auth_header=""
+  
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    auth_header="-H Authorization: token $GITHUB_TOKEN"
+  fi
+  
+  curl -s $auth_header "https://api.github.com/repos/${repo}/commits/${branch}" | \
     jq -r '.sha // empty'
 }
 
@@ -65,32 +105,14 @@ prefetch_github() {
   # repo format is "owner/repo", split them
   local owner="${repo%%/*}"
   local pkg_name="${repo##*/}"
-  nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" 2>/dev/null | \
-    jq -r '.hash' | sed 's/^sha256-//'
-}
-
-# Function to get vendorHash by attempting a build
-get_vendor_hash() {
-  local pkg_name="$1"
-  log "Getting vendorHash for ${pkg_name}..."
   
-  # Build and capture the suggested vendorHash
-  # This temporarily uses lib.fakeHash to get the correct value
-  local build_output
-  build_output=$(nix build .#homeConfigurations.tauraamui.activationPackage 2>&1 || true)
-  
-  # Extract the suggested hash for this specific package
-  # The build output will show something like: 
-  # "got sha256: ... expected sha256: lib.fakeHash"
-  local suggested_hash
-  suggested_hash=$(echo "$build_output" | grep -A2 "${pkg_name}" | grep "got:" | sed 's/.*got: sha256-\([A-Za-z0-9+/=]\+\).*/\1/' || true)
-  
-  if [ -n "$suggested_hash" ]; then
-    info "Found vendorHash: sha256-${suggested_hash}"
-    echo "sha256-${suggested_hash}"
+  if [ -n "${GITHUB_TOKEN:-}" ]; then
+    # Use authenticated request for higher rate limits
+    nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" --github-access-token "$GITHUB_TOKEN" 2>/dev/null | \
+      jq -r '.hash' | sed 's/^sha256-//'
   else
-    warn "Could not extract vendorHash from build output"
-    echo ""
+    nix-prefetch-github "$owner" "$pkg_name" --rev "${rev}" 2>/dev/null | \
+      jq -r '.hash' | sed 's/^sha256-//'
   fi
 }
 
@@ -125,6 +147,10 @@ update_package() {
   
   if [ -z "$latest_rev" ]; then
     error "Could not get latest rev for ${pkg_name}"
+    error "This may be due to GitHub API rate limiting."
+    if [ -z "${GITHUB_TOKEN:-}" ]; then
+      error "Try setting GITHUB_TOKEN environment variable for higher rate limits."
+    fi
     return 1
   fi
   
@@ -144,31 +170,22 @@ update_package() {
     return 1
   fi
   
-  # Create backup
-  cp home.nix home.nix.backup
+  # Create backup if not already created
+  if [ ! -f "home.nix.backup.$(date +%Y%m%d)*" ]; then
+    cp home.nix "home.nix.backup.$(date +%Y%m%d_%H%M%S)"
+  fi
   
   # Update rev and sha256 in home.nix
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|rev = \"${current_rev}\"|rev = \"${latest_rev}\"|" home.nix
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|sha256 = \"sha256-[A-Za-z0-9+/=]\+\"|sha256 = \"sha256-${new_hash}\"|" home.nix
   
-  # Set vendorHash to fakeHash temporarily - we'll update it after build
+  # Set vendorHash to fakeHash temporarily
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix
   sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = null|vendorHash = lib.fakeHash; # Update me|" home.nix
   
   log "Updated ${pkg_name} revision and source hash"
-  
-  # Now try to build and get vendorHash
-  log "Building to get correct vendorHash for ${pkg_name}..."
-  local vendor_hash
-  vendor_hash=$(get_vendor_hash "${pkg_name}")
-  
-  # If we got a vendorHash, update it
-  if [ -n "$vendor_hash" ] && [ "$vendor_hash" != "sha256-" ]; then
-    sed -i "/${pkg_name} = pkgs-unstable.buildGoModule/,/^  };/ s|vendorHash = lib.fakeHash; # Update me|vendorHash = \"${vendor_hash}\"|" home.nix
-    log "Updated ${pkg_name} vendorHash"
-  else
-    warn "Could not determine vendorHash for ${pkg_name}. Build will tell you what it should be."
-  fi
+  log "Remember to run: home-manager switch -b backup --impure --flake ."
+  log "Then update the vendorHash with the value shown in the error output."
   
   return 0
 }
@@ -200,7 +217,7 @@ update_crush() {
   
   # Get commit for this tag
   local commit_sha
-  commit_sha=$(curl -s "https://api.github.com/repos/charmbracelet/crush/git/refs/tags/${latest_tag}" | \
+  commit_sha=$(curl -s ${GITHUB_TOKEN:+-H "Authorization: token $GITHUB_TOKEN"} "https://api.github.com/repos/charmbracelet/crush/git/refs/tags/${latest_tag}" | \
     jq -r '.object.sha // empty')
   
   if [ -z "$commit_sha" ]; then
@@ -224,15 +241,8 @@ update_crush() {
   sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|vendorHash = \"sha256-[A-Za-z0-9+/=]\+\"|vendorHash = lib.fakeHash; # Update me|" home.nix
   
   log "Updated crush version and source hash"
-  
-  # Get vendorHash from build
-  local vendor_hash
-  vendor_hash=$(get_vendor_hash "crush")
-  
-  if [ -n "$vendor_hash" ] && [ "$vendor_hash" != "sha256-" ]; then
-    sed -i "/crush = pkgs-unstable.buildGoModule rec/,/^  };/ s|vendorHash = lib.fakeHash; # Update me|vendorHash = \"${vendor_hash}\"|" home.nix
-    log "Updated crush vendorHash"
-  fi
+  log "Remember to run: home-manager switch -b backup --impure --flake ."
+  log "Then update the vendorHash with the value shown in the error output."
   
   return 0
 }
@@ -244,6 +254,9 @@ main() {
   # Check dependencies
   check_dependencies
   
+  # Check rate limit
+  check_rate_limit
+  
   # Change to script directory
   cd "$(dirname "$0")"
   
@@ -252,7 +265,7 @@ main() {
   
   # Create backup
   log "Creating backup of home.nix..."
-  cp home.nix home.nix.backup.$(date +%Y%m%d_%H%M%S)
+  cp home.nix "home.nix.backup.$(date +%Y%m%d_%H%M%S)"
   
   # Update crush (versioned)
   update_crush && ((UPDATES_MADE++)) || true
@@ -269,15 +282,14 @@ main() {
   
   if [ $UPDATES_MADE -gt 0 ]; then
     log "$UPDATES_MADE packages were updated."
-    log "Testing build..."
-    
-    if nix build .#homeConfigurations.tauraamui.activationPackage; then
-      log "Build successful! All hashes are correct."
-    else
-      error "Build failed. Check the output for the correct vendorHash values."
-      log "You can view the backup file if needed to revert changes."
-      exit 1
-    fi
+    log ""
+    log "Next steps:"
+    log "1. Review the changes in home.nix"
+    log "2. Run: home-manager switch -b backup --impure --flake ."
+    log "3. If vendorHash errors occur, update the vendorHash values in home.nix"
+    log "   with the values shown in the build output."
+    log ""
+    log "Backup created: home.nix.backup.*"
   else
     log "No updates were necessary."
   fi
@@ -294,10 +306,19 @@ if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
   echo "Options:"
   echo "  -h, --help     Show this help message"
   echo ""
+  echo "Environment variables:"
+  echo "  GITHUB_TOKEN   GitHub personal access token (optional but recommended)"
+  echo "                 Increases rate limit from 60 to 5000 requests/hour"
+  echo ""
   echo "This script will:"
   echo "1. Check for updates to all Go packages in home.nix"
-  echo "2. Update rev/tag, source sha256, and vendorHash automatically"
-  echo "3. Test the build to ensure correctness"
+  echo "2. Update rev/tag and source sha256 hashes"
+  echo "3. Set vendorHash to lib.fakeHash (must be updated manually)"
+  echo ""
+  echo "After running this script:"
+  echo "  home-manager switch -b backup --impure --flake ."
+  echo ""
+  echo "The build will show the correct vendorHash values to use."
   echo ""
   echo "Packages tracked:"
   echo "  - charmbracelet/crush (releases)"
