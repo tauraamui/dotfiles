@@ -2,7 +2,7 @@
 let
   crush = pkgs-unstable.buildGoModule rec {
     pname = "crush";
-    version = "0.9.1";
+    version = "0.24.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "charmbracelet";
@@ -20,7 +20,7 @@ let
 
   gofumpt = pkgs-unstable.buildGoModule {
     pname = "gofumpt";
-    version = "latest";
+    version = "0.9.2";
 
     src = pkgs.fetchFromGitHub {
       owner = "mvdan";
@@ -35,7 +35,7 @@ let
 
   goimports = pkgs-unstable.buildGoModule {
     pname = "goimports";
-    version = "latest";
+    version = "0.40.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "golang";
@@ -51,7 +51,7 @@ let
 
   scc = pkgs-unstable.buildGoModule {
     pname = "scc";
-    version = "latest";
+    version = "3.6.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "boyter";
@@ -66,7 +66,7 @@ let
 
   sqlc = pkgs-unstable.buildGoModule {
     pname = "sqlc";
-    version = "latest";
+    version = "1.30.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "sqlc-dev";
@@ -82,7 +82,7 @@ let
 
   gotestsum = pkgs-unstable.buildGoModule {
     pname = "gotestsum";
-    version = "latest";
+    version = "1.13.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "gotestyourself";
@@ -97,7 +97,7 @@ let
 
   invoice = pkgs-unstable.buildGoModule {
     pname = "invoice";
-    version = "latest";
+    version = "0.1.0";
 
     src = pkgs.fetchFromGitHub {
       owner = "maaslalani";
