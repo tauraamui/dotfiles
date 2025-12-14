@@ -37,6 +37,13 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Install dependencies
+        run: |
+          # Install nix-prefetch-github using nix profile
+          nix profile install nixpkgs#nix-prefetch-github
+          # Add to PATH
+          echo "$HOME/.nix-profile/bin" >> $GITHUB_PATH
+
       - name: Run update script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

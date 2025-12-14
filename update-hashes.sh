@@ -35,11 +35,12 @@ check_dependencies() {
   done
   
   if ! command -v nix-prefetch-github &> /dev/null; then
-    warn "nix-prefetch-github not found, attempting to install..."
-    nix-env -iA nixpkgs.nix-prefetch-github || {
-      error "Failed to install nix-prefetch-github"
-      exit 1
-    }
+    error "nix-prefetch-github is required but not found in PATH"
+    error ""
+    error "Install it with: nix profile install nixpkgs#nix-prefetch-github"
+    error "Or in GitHub Actions, add this step before running the script:"
+    error "  - run: nix profile install nixpkgs#nix-prefetch-github"
+    exit 1
   fi
 }
 
