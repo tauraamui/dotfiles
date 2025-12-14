@@ -4,6 +4,15 @@ on:
   schedule:
     # Run every night at 2 AM UTC
     - cron: '0 2 * * *'
+  pull_request:
+    # Run on pull request creation and updates
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'home.nix'
+      - 'flake.nix'
+      - 'flake.lock'
+      - '.github/workflows/update-hashes.yml'
+      - 'update-hashes.sh'
   workflow_dispatch: # Allow manual triggering
     inputs:
       package:
@@ -51,7 +60,8 @@ jobs:
         id: changes
 
       - name: Create Pull Request
-        if: steps.changes.outputs.changes == 'true'
+        # Only create PR for scheduled/manual runs, not for PR sync
+        if: steps.changes.outputs.changes == 'true' && github.event_name != 'pull_request'
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,6 +71,8 @@ jobs:
             ## Automated Package Updates
             
             This PR updates Go package versions and SHA256 hashes in `home.nix`.
+            
+            **Triggered by:** ${{ github.event_name == 'schedule' && 'Scheduled nightly run' || github.event_name == 'workflow_dispatch' && 'Manual workflow dispatch' || 'Pull request sync' }}
             
             ### Summary of changes:
             
