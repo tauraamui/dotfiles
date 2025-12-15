@@ -127,8 +127,8 @@ in
     '';
   };
 
-  nixGL.packages = nixgl.packages;
-  nixGL.defaultWrapper = "mesa";
+  targets.genericLinux.nixGL.packages = nixgl.packages;
+  targets.genericLinux.nixGL.defaultWrapper = "mesa";
 
   home.packages = [
     pkgs.lazygit
@@ -142,7 +142,7 @@ in
     pkgs-unstable.vlang
     pkgs-unstable.go
     pkgs-unstable.svu
-    pkgs.gitAndTools.gh
+    pkgs.gh
     pkgs.httpie
     pkgs.go-task
     # go tools + packages
@@ -376,19 +376,21 @@ in
 
   programs.git = {
     enable = true;
-    userEmail = "adampstringer@protonmail.com";
-    userName = "tauraamui";
+    settings = {
+  	user = {
+  	  email = "adampstringer@protonmail.com";
+  	  name = "tauraamui";
+  	};
+  	url = {
+  	  "ssh://git@github.com/" = {
+  	    insteadOf = "https://github.com/";
+  	  };
+  	};
+    };
     signing = {
       format = "ssh";
       key = "/home/tauraamui/.ssh/id_ed25519.pub";
       signByDefault = true;
-    };
-    extraConfig = {
-      url = {
-        "ssh://git@github.com/" = {
-          insteadOf = "https://github.com/";
-        };
-      };
     };
   };
 
