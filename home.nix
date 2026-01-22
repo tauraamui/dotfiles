@@ -442,6 +442,7 @@ in
 
     # Optional: Add shell aliases
     shellAliases = {
+      youtube-music = "youtube-music-for-desktop";
       gob = "go build .";
       gof = "go fmt -x ./...";
       goi = "goimports -w .";
