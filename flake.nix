@@ -26,7 +26,7 @@
           '';
           environment.systemPackages = [pkgs.coreutils];
           system.keyboard.enableKeyMapping = true;
-          # fonts.packages = [(pkgs.nerd-fonts.override {fonts = ["Meslo" "Gohu"];})];
+          fonts.packages = [pkgs.nerd-fonts.meslo-lg pkgs.nerd-fonts.gohufont];
           system.defaults.finder.AppleShowAllExtensions = true;
           system.defaults.finder._FXShowPosixPathInTitle = true;
           system.defaults.dock.autohide = true;
@@ -34,6 +34,10 @@
           system.defaults.NSGlobalDomain.KeyRepeat = 1;
           system.primaryUser = "tauraamui";
           system.stateVersion = 6;
+          homebrew = {
+            enable = true;
+            caskArgs.no_quarantine = true;
+          };
         })
         inputs.home-manager.darwinModules.home-manager
         {
@@ -76,7 +80,7 @@
                 programs.fish.enable = true;
                 programs.alacritty = {
                   enable = true;
-                  settings.font.normal.family = "Gohu11 Nerd Font Mono";
+                  settings.font.normal.family = "GohuFont 11 Nerd Font Mono";
                   settings.font.size = 11;
                 };
                 programs.tmux = {
