@@ -51,6 +51,7 @@
               casks = [
                 "raycast"
                 "google-chrome"
+                "brave-browser"
               ];
             };
           }
