@@ -201,6 +201,18 @@ in
     '';
   };
 
+  programs.atuin = {
+    enable = true;
+    package = pkgs-unstable.atuin;
+    enableFishIntegration = true;
+    settings = {
+      auto_sync = true;
+      sync_frequency = "10m";
+       sync_address = "https://api.atuin.sh";
+      search_mode = "fuzzy";
+    };
+  };
+
   programs.tmux = {
     enable = true;
     keyMode = "vi";
@@ -443,6 +455,7 @@ in
     # Optional: Add shell aliases
     shellAliases = {
       youtube-music = "youtube-music-for-desktop";
+      au  = "atuin";
       gob = "go build .";
       gof = "go fmt -x ./...";
       goi = "goimports -w .";

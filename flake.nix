@@ -40,6 +40,7 @@
         inherit self;
         nixgl = nixgl;
         pkgs-unstable = pkgs-unstable;
+        inherit nixpkgs-unstable;
         gpgKeyGeneratorScript = import ./pkgs/gpg-key-generator.nix {
           pkgs = pkgs;
         };
