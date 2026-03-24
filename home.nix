@@ -139,7 +139,7 @@ in
     pkgs.git
     pkgs.wget
     pkgs.xdotool
-    pkgs-unstable.vlang
+    # pkgs-unstable.vlang
     pkgs-unstable.go
     pkgs-unstable.svu
     pkgs.gh
@@ -158,7 +158,7 @@ in
   home.file = {
     ".XCompose".source = ./compose-mappings;
     ".config/hypr/bindings.conf".source = ./hypr/bindings.conf;
-    ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
+    # ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
     ".config/hypr/looknfeel.conf".source = ./hypr/looknfeel.conf;
     ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
   };
