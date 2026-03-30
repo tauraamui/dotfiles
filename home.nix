@@ -414,6 +414,7 @@ in
     gitCredentialHelper = {
       enable = true;
     };
+    extensions = [pkgs.gh-markdown-preview];
   };
 
   # Enable and configure Fish shell
@@ -439,6 +440,7 @@ in
       set -g fish_greeting ""  # Disable greeting message
       set -g LD_LIBRARY_PATH "/usr/lib"
       fish_add_path ~/.local/bin
+      fish_add_path ~/go/bin
     '';
 
     # Ensure Nix environment is loaded
