@@ -336,6 +336,7 @@ in
     interactiveShellInit = ''
       set -g fish_greeting ""
       fish_add_path ~/.local/bin
+      set -gx SHELL /etc/profiles/per-user/tauraamui/bin/fish
     '';
 
     loginShellInit = ''
