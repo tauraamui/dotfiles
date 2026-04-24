@@ -53,6 +53,7 @@
             system.defaults.NSGlobalDomain.KeyRepeat = 1;
             system.primaryUser = "tauraamui";
             system.stateVersion = 6;
+            users.users.tauraamui.shell = pkgs.fish;
             homebrew = {
               enable = true;
               caskArgs.no_quarantine = true;

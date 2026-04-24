@@ -44,7 +44,6 @@ in
     pkgs.gawk
     pkgs.git
     pkgs.wget
-    pkgs.vlang
     pkgs.go
     pkgs.svu
     pkgs.gh
@@ -151,6 +150,7 @@ in
 
   programs.alacritty = {
     enable = true;
+    settings.terminal.shell.program = "/etc/profiles/per-user/tauraamui/bin/fish";
     settings.font.normal.family = "GohuFont 11 Nerd Font Mono";
     settings.font.size = 11;
   };
