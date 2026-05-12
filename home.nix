@@ -161,14 +161,15 @@ in
     # ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
     ".config/hypr/looknfeel.conf".source = ./hypr/looknfeel.conf;
     ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
+    ".config/waybar/style.css".source = ./waybar/style.css;
+    ".config/waybar/themes/V2.a/config.jsonc".source = ./waybar/themes/V2.a/config.jsonc;
+    ".config/waybar/themes/V2.a/style.css".source = ./waybar/themes/V2.a/style.css;
   };
 
   home.sessionVariables = { };
 
   programs.home-manager.enable = true;
   programs.ripgrep.enable = true;
-  programs.rio.enable = true;
-  programs.kitty.enable = true;
   programs.gh-dash.enable = true; # bit confused how this works since `gh` itself is installed a package not a program but oki
   # programs.obsidian.enable = true;
 
@@ -216,7 +217,7 @@ in
   programs.tmux = {
     enable = true;
     keyMode = "vi";
-    prefix = "C-w";
+    prefix = "C-b";
     baseIndex = 1;
     mouse = true;
     plugins = with pkgs.tmuxPlugins; [
