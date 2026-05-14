@@ -1,5 +1,7 @@
 module main
 
+import os
+
 struct PackageManager {
 	name        string
 	detect      []string
@@ -40,7 +42,34 @@ const pkg_managers = [
 	},
 ]
 
+type BinResolver = fn (bin_name string) !string
+
+fn detect_package_manager(resolve_bin BinResolver, managers_to_resolve []PackageManager) ?PackageManager {
+	for pkg in managers_to_resolve {
+		for bin_to_detect in pkg.detect {
+			if (resolve_bin(bin_to_detect) or { '' }) != '' {
+				return pkg
+			}
+		}
+	}
+	return none
+}
+
+type CmdRunner = fn (cmd string) Result
+
+fn update_package_manager(run_cmd CmdRunner, pkg_manager PackageManager) ! {
+}
+
+fn run_with(
+	resolve_bin BinResolver
+	run_cmd     CmdRunner
+) ! {
+	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or { return error('failed to resolve pkg manager') }
+	update_result := run_cmd(resolved_pkg_manager.update_cmd)
+	println(update_result)
+}
+
 fn main() {
-	println(pkg_managers)
+	run_with(os.find_abs_path_of_executable, os.execute)!
 }
 
