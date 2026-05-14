@@ -55,9 +55,10 @@ fn detect_package_manager(resolve_bin BinResolver, managers_to_resolve []Package
 	return none
 }
 
-type CmdRunner = fn (cmd string) Result
+type CmdRunner = fn (cmd string) os.Result
 
 fn update_package_manager(run_cmd CmdRunner, pkg_manager PackageManager) ! {
+	println(run_cmd(pkg_manager.update_cmd))
 }
 
 fn run_with(
