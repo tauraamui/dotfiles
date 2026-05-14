@@ -13,7 +13,7 @@ const pkg_managers = [
 	PackageManager{
 		name: 'apt'
 		detect: ['apt-get']
-		update_cmd: 'sudo sh -c "if command -v apt >/dev/null 2>&1; then apt update; else apt-get update; fi"'
+		update_cmd: 'sudo apt-get update'
 		install_cmd: 'sudo apt-get install -y'
 	},
 	PackageManager{
