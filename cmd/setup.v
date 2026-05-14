@@ -2,6 +2,18 @@ module main
 
 import os
 
+struct UserPackage {
+	name string
+}
+
+struct UserProfile {
+	packages []UserPackage
+}
+
+fn resolve_user_profile(profile_path string) ?UserProfile {
+	return none
+}
+
 struct PackageManager {
 	name        string
 	detect      []string
