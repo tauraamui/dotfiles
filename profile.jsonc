@@ -1,3 +1,16 @@
 {
-	"packages": [{ "name": "stow" }]
+	"packages": [
+		{ "name": "stow" },
+		{ "name": "lazygit" },
+		{ "name": "htop" },
+		{ "name": "gnupg" },
+		{ "name": "pinentry" },
+		{ "name": "gawk" },
+		{ "name": "git" },
+		{ "name": "xdotool" },
+		{ "name": "go" },
+		{ "name": "github-cli" },
+		{ "name": "httpie" },
+		{ "name": "go-task" }
+	]
 }

@@ -131,20 +131,20 @@ in
   targets.genericLinux.nixGL.defaultWrapper = "mesa";
 
   home.packages = [
-    pkgs.lazygit
-    pkgs.htop
-    pkgs.gnupg
-    pkgs.pinentry-curses
-    pkgs.gawk
-    pkgs.git
-    pkgs.wget
-    pkgs.xdotool
+    # pkgs.lazygit
+    # pkgs.htop
+    # pkgs.gnupg
+    # pkgs.pinentry-curses
+    # pkgs.gawk
+    # pkgs.git
+    # pkgs.wget
+    # pkgs.xdotool
     # pkgs-unstable.vlang
-    pkgs-unstable.go
-    pkgs-unstable.svu
-    pkgs.gh
-    pkgs.httpie
-    pkgs.go-task
+    # pkgs-unstable.go
+    # pkgs-unstable.svu
+    # pkgs.gh
+    # pkgs.httpie
+    # pkgs.go-task
     # go tools + packages
     crush
     goimports
@@ -155,18 +155,6 @@ in
     invoice
   ];
 
-  home.file = {
-    ".XCompose".source = ./compose-mappings;
-    ".config/hypr/bindings.conf".source = ./hypr/bindings.conf;
-    # ".config/hypr/hyprlock.conf".source = ./hypr/hyprlock.conf;
-    ".config/hypr/looknfeel.conf".source = ./hypr/looknfeel.conf;
-    ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
-    ".config/waybar/style.css".source = ./waybar/style.css;
-    ".config/waybar/themes/V2.a/config.jsonc".source = ./waybar/themes/V2.a/config.jsonc;
-    ".config/waybar/themes/V2.a/style.css".source = ./waybar/themes/V2.a/style.css;
-  };
-
-  home.sessionVariables = { };
 
   programs.home-manager.enable = true;
   programs.ripgrep.enable = true;
