@@ -99,12 +99,13 @@ fn run_with(
 		exit(1)
 	}
 
-	println('resolved package manager: ${resolved_pkg_manager.name}, running package update...')
+	println('resolved package manager: ${resolved_pkg_manager.name}')
+	println('[${resolved_pkg_manager.name}] running package update...')
 	update_package_manager(run_cmd, resolved_pkg_manager) or {
 		eprintln('failed to update package manager: ${err}')
 		exit(1)
 	}
-	println('updated packages successfully...')
+	println('[${resolved_pkg_manager.name}] updated packages successfully...')
 }
 
 fn main() {
