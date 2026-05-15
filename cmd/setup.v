@@ -86,14 +86,24 @@ fn update_package_manager(run_cmd CmdRunner, pkg_manager PackageManager) ! {
 	}
 }
 
+// This function internally decides which errors need to be raised to become panics
+// and which can be just handled directly as tidier "handled" error output. In this way
+// it provides the opportunity for some steps to fail but not derail the entire profile run.
 fn run_with(
 	resolve_bin BinResolver
 	run_cmd     CmdRunner
 ) ! {
 	println('resolving package manager...')
-	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or { return error('failed to resolve package manager') }
+	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or {
+		eprintln('failed to resolve package manager')
+		exit(1)
+	}
+
 	println('resolved package manager: ${resolved_pkg_manager.name}, running package update...')
-	update_package_manager(run_cmd, resolved_pkg_manager) or { return error('failed to update package manager: ${err}') }
+	update_package_manager(run_cmd, resolved_pkg_manager) or {
+		eprintln('failed to update package manager: ${err}')
+		exit(1)
+	}
 	println('updated packages successfully...')
 }
 
