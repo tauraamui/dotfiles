@@ -1,6 +1,7 @@
 module main
 
 import os
+import json
 
 struct UserPackage {
 	name string
@@ -10,8 +11,11 @@ struct UserProfile {
 	packages []UserPackage
 }
 
-fn resolve_user_profile(profile_path string) ?UserProfile {
-	return none
+type FileReader = fn (path string) !string
+
+fn resolve_user_profile(read_file FileReader, profile_path string) !UserProfile {
+	file_data := read_file(profile_path)!
+	return json.decode(UserProfile, file_data)!
 }
 
 struct PackageManager {
@@ -86,13 +90,29 @@ fn update_package_manager(run_cmd CmdRunner, pkg_manager PackageManager) ! {
 	}
 }
 
+fn install_package_with_manager(run_cmd CmdRunner, pkg_manager PackageManager, pkg UserPackage) ! {
+	result := run_cmd('${pkg_manager.install_cmd} ${pkg.name}')
+	if result.exit_code != 0 {
+		return error('${pkg_manager.name} errored: ${result.output}')
+	}
+}
+
 // This function internally decides which errors need to be raised to become panics
 // and which can be just handled directly as tidier "handled" error output. In this way
 // it provides the opportunity for some steps to fail but not derail the entire profile run.
 fn run_with(
 	resolve_bin BinResolver
 	run_cmd     CmdRunner
+	read_file   FileReader
 ) ! {
+	println('----- tauraamui setup tool -----')
+
+	println('resolving profile...')
+	user_profile := resolve_user_profile(read_file, './profile.jsonc') or {
+		eprintln('failed to resolve profile: ${err}')
+		exit(1)
+	}
+
 	println('resolving package manager...')
 	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or {
 		eprintln('failed to resolve package manager')
@@ -106,9 +126,17 @@ fn run_with(
 		exit(1)
 	}
 	println('[${resolved_pkg_manager.name}] updated packages successfully...')
+
+	for pkg in user_profile.packages {
+		install_package_with_manager(run_cmd, resolved_pkg_manager, pkg) or {
+			eprintln('failed to install package ${pkg.name}: ${err}')
+			continue
+		}
+		println('[${resolved_pkg_manager.name}] installed package ${pkg.name} successfully...')
+	}
 }
 
 fn main() {
-	run_with(os.find_abs_path_of_executable, os.execute)!
+	run_with(os.find_abs_path_of_executable, os.execute, os.read_file)!
 }
 

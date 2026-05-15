@@ -2,6 +2,30 @@ module main
 
 import os
 
+fn build_file_reader(mut read_file_path &string, mock_file_content string) FileReader {
+	return fn [mut read_file_path, mock_file_content] (file_path string) !string {
+		read_file_path = file_path
+		return mock_file_content
+	}
+}
+
+const mock_profile_content = '
+	{
+		"packages": [{ "name": "stow" }]
+	}
+'
+
+fn test_resolve_user_profile() {
+	mut read_file_path := ''
+	expected_user_profile := UserProfile{
+		packages: [
+			UserPackage{ name: "stow" }
+		]
+	}
+	assert resolve_user_profile(build_file_reader(mut &read_file_path, mock_profile_content), './profile.jsonc')! == expected_user_profile
+	assert read_file_path == './profile.jsonc'
+}
+
 fn build_bin_resolver(bin_to_find string) BinResolver {
 	return fn [bin_to_find] (bin_name string) !string {
 		return if bin_to_find == bin_name { bin_name } else { error('unable to find: ${bin_name}') }
@@ -38,6 +62,7 @@ fn test_update_package_manager_success() {
 	assert cmd_run == 'sudo zypper refresh'
 }
 
+@[assert_continues]
 fn test_update_package_manager_failures() {
 	mut cmd_run := ''
 	mut err_msg := ''
@@ -48,7 +73,7 @@ fn test_update_package_manager_failures() {
 	}), apt_pkg_manager) or {
 		err_msg = err.msg()
 	}
-	assert err_msg == 'failed to update package manager apt: test force fail for apt update run'
+	assert err_msg == 'apt errored: test force fail for apt update run'
 	assert cmd_run == 'sudo apt-get update'
 
 	cmd_run = ''
@@ -59,7 +84,7 @@ fn test_update_package_manager_failures() {
 	}), pacman_pkg_manager) or {
 		err_msg = err.msg()
 	}
-	assert err_msg == 'failed to update package manager pacman: test force fail for pacman update run'
+	assert err_msg == 'pacman errored: test force fail for pacman update run'
 	assert cmd_run == 'sudo pacman -Sy'
 
 	cmd_run = ''
@@ -70,7 +95,7 @@ fn test_update_package_manager_failures() {
 	}), dnf_pkg_manager) or {
 		err_msg = err.msg()
 	}
-	assert err_msg == 'failed to update package manager dnf: test force fail for dnf update run'
+	assert err_msg == 'dnf errored: test force fail for dnf update run'
 	assert cmd_run == 'sudo dnf -y update'
 
 	cmd_run = ''
@@ -81,7 +106,7 @@ fn test_update_package_manager_failures() {
 	}), zypper_pkg_manager) or {
 		err_msg = err.msg()
 	}
-	assert err_msg == 'failed to update package manager zypper: test force fail for zypper update run'
+	assert err_msg == 'zypper errored: test force fail for zypper update run'
 	assert cmd_run == 'sudo zypper refresh'
 }
 
