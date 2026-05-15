@@ -21,37 +21,47 @@ struct PackageManager {
 	install_cmd string
 }
 
+const apt_pkg_manager = PackageManager{
+	name: 'apt'
+	detect: ['apt-get']
+	update_cmd: 'sudo apt-get update'
+	install_cmd: 'sudo apt-get install -y'
+}
+
+const pacman_pkg_manager = PackageManager{
+	name:        'pacman'
+	detect:      ['pacman']
+	update_cmd:  'sudo pacman -Sy'
+	install_cmd: 'sudo pacman -S --needed --noconfirm'
+}
+
+const dnf_pkg_manager = PackageManager{
+	name: 'dnf'
+	detect: ['dnf']
+	update_cmd:  'sudo dnf -y update'
+	install_cmd: 'sudo dnf -y install'
+}
+
+const zypper_pkg_manager = PackageManager{
+	name:        'zypper'
+	detect:      ['zypper']
+	update_cmd:  'sudo zypper refresh'
+	install_cmd: 'sudo zypper install -y'
+}
+
+const apk_pkg_manager = PackageManager{
+	name:        'apk'
+	detect:      ['apk']
+	update_cmd:  'sudo apk update'
+	install_cmd: 'sudo apk add --no-cache'
+}
+
 const pkg_managers = [
-	PackageManager{
-		name: 'apt'
-		detect: ['apt-get']
-		update_cmd: 'sudo apt-get update'
-		install_cmd: 'sudo apt-get install -y'
-	},
-	PackageManager{
-		name: 'dnf'
-		detect: ['dnf']
-		update_cmd:  'sudo dnf -y update'
-		install_cmd: 'sudo dnf -y install'
-	},
-	PackageManager{
-		name:        'pacman'
-		detect:      ['pacman']
-		update_cmd:  'sudo pacman -Sy'
-		install_cmd: 'sudo pacman -S --needed --noconfirm'
-	},
-	PackageManager{
-		name:        'zypper'
-		detect:      ['zypper']
-		update_cmd:  'sudo zypper refresh'
-		install_cmd: 'sudo zypper install -y'
-	},
-	PackageManager{
-		name:        'apk'
-		detect:      ['apk']
-		update_cmd:  'sudo apk update'
-		install_cmd: 'sudo apk add --no-cache'
-	},
+	apt_pkg_manager,
+	pacman_pkg_manager,
+	dnf_pkg_manager,
+	zypper_pkg_manager,
+	apk_pkg_manager,
 ]
 
 type BinResolver = fn (bin_name string) !string
@@ -70,16 +80,18 @@ fn detect_package_manager(resolve_bin BinResolver, managers_to_resolve []Package
 type CmdRunner = fn (cmd string) os.Result
 
 fn update_package_manager(run_cmd CmdRunner, pkg_manager PackageManager) ! {
-	println(run_cmd(pkg_manager.update_cmd))
+	result := run_cmd(pkg_manager.update_cmd)
+	if result.exit_code != 0 {
+		return error('failed to update package manager ${pkg_manager.name}: ${result.output}')
+	}
 }
 
 fn run_with(
 	resolve_bin BinResolver
 	run_cmd     CmdRunner
 ) ! {
-	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or { return error('failed to resolve pkg manager') }
-	update_result := run_cmd(resolved_pkg_manager.update_cmd)
-	println(update_result)
+	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or { return error('failed to resolve package manager') }
+	update_package_manager(run_cmd, resolved_pkg_manager) or { return error('failed to update package manager: ${err}') }
 }
 
 fn main() {
