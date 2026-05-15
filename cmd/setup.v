@@ -90,8 +90,11 @@ fn run_with(
 	resolve_bin BinResolver
 	run_cmd     CmdRunner
 ) ! {
+	println('resolving package manager...')
 	resolved_pkg_manager := detect_package_manager(resolve_bin, pkg_managers) or { return error('failed to resolve package manager') }
+	println('resolved package manager: ${resolved_pkg_manager.name}, running package update...')
 	update_package_manager(run_cmd, resolved_pkg_manager) or { return error('failed to update package manager: ${err}') }
+	println('updated packages successfully...')
 }
 
 fn main() {
