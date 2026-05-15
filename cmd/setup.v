@@ -82,7 +82,7 @@ type CmdRunner = fn (cmd string) os.Result
 fn update_package_manager(run_cmd CmdRunner, pkg_manager PackageManager) ! {
 	result := run_cmd(pkg_manager.update_cmd)
 	if result.exit_code != 0 {
-		return error('failed to update package manager ${pkg_manager.name}: ${result.output}')
+		return error('${pkg_manager.name} errored: ${result.output}')
 	}
 }
 
